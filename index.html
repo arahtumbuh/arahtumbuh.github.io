@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arah Tumbuh | Digital Life Companion</title>
+    <!-- Tipografi Resmi Arah Tumbuh -->
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- SISTEM WARNA ARAH TUMBUH (60-30-10) --- */
+        :root { 
+            --warm-sand: #F9F8F6;    
+            --deep-forest: #1B2A26;  
+            --terracotta: #C86A4C;   
+            --charcoal: #33363F;     
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            background-color: var(--warm-sand); 
+            color: var(--charcoal); 
+            line-height: 1.6; 
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 { 
+            font-family: 'League Spartan', sans-serif; 
+            color: var(--deep-forest); 
+            font-weight: 700; 
+        }
+
+        /* --- LANGUAGE SWITCHER --- */
+        .lang-switcher {
+            position: fixed; top: 32px; right: 5%; z-index: 100;
+            display: flex; gap: 4px; background: rgba(249, 248, 246, 0.9); 
+            padding: 6px; border-radius: 999px; border: 2px solid #EAE6DF;
+            backdrop-filter: blur(8px);
+        }
+        .lang-btn {
+            background: transparent; border: none; padding: 8px 16px; font-size: 14px; 
+            font-weight: 600; color: var(--charcoal); cursor: pointer; 
+            border-radius: 999px; transition: 0.3s; font-family: 'Open Sans', sans-serif;
+        }
+        .lang-btn.active { background: var(--terracotta); color: var(--warm-sand); }
+
+        /* --- NAVIGASI --- */
+        nav { 
+            padding: 32px 5%; 
+            display: flex; 
+            justify-content: flex-start; 
+            align-items: center; 
+            position: absolute; 
+            width: 100%; 
+            z-index: 10; 
+        }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .brand-img-logo { height: 32px; width: auto; }
+
+        /* --- TOMBOL --- */
+        .btn {
+            background-color: var(--deep-forest); color: var(--warm-sand); border: none; padding: 12px 24px;
+            font-size: 15px; font-weight: 600; border-radius: 999px; cursor: pointer;
+            text-decoration: none; transition: opacity 0.3s ease; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+        .btn-primary { background-color: var(--terracotta); padding: 16px 32px; font-size: 16px; }
+        .btn-sm { padding: 10px 20px; font-size: 14px; }
+        .btn-disabled { background-color: transparent; color: var(--deep-forest); border: 2px solid var(--deep-forest); cursor: not-allowed; padding: 10px 20px; font-size: 14px;}
+        .btn-disabled:hover { opacity: 0.7; transform: none; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 90vh; display: flex; flex-direction: column; justify-content: center;
+            padding: 120px 5% 80px; position: relative; max-width: 1200px; margin: 0 auto;
+            overflow: hidden; 
+        }
+        
+        .shape-bg { position: absolute; z-index: -1; }
+        .shape-circle {
+            width: 450px; height: 450px; border-radius: 50%;
+            background-color: var(--terracotta); opacity: 0.05; 
+            top: -10%; right: -10%;
+        }
+        .shape-pill {
+            width: 300px; height: 600px; border-radius: 999px; 
+            background-color: var(--deep-forest); opacity: 0.03;
+            bottom: -20%; right: 20%; transform: rotate(-35deg);
+        }
+
+        .hero-badge { 
+            font-family: 'Open Sans', sans-serif; font-size: 14px; font-weight: 600; 
+            color: var(--terracotta); letter-spacing: 2px; text-transform: uppercase; 
+            margin-bottom: 24px; display: block; 
+        }
+        .hero h1 { font-size: clamp(48px, 6vw, 80px); line-height: 1.1; margin-bottom: 32px; max-width: 950px; letter-spacing: -1px; }
+        .hero p { font-size: clamp(18px, 2vw, 22px); color: var(--charcoal); max-width: 650px; margin-bottom: 48px; }
+
+        /* --- RUANG RENUNG (FILOSOFI) --- */
+        .philosophy { padding: 120px 5%; background-color: var(--deep-forest); color: var(--warm-sand); overflow: hidden;}
+        .phil-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        
+        .phil-text h2 { color: var(--warm-sand); font-size: clamp(40px, 4vw, 56px); margin-bottom: 32px; line-height: 1.1; }
+        .phil-text p { font-size: 18px; margin-bottom: 24px; color: #EAE6DF; }
+        .highlight-text { 
+            font-weight: 600; color: var(--terracotta); font-family: 'Open Sans', sans-serif; 
+            font-size: 20px; margin-top: 40px; display: block; 
+            border-left: 4px solid var(--terracotta); padding-left: 24px; 
+        }
+
+        .pattern-showcase {
+            position: relative; width: 100%; height: 500px;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .brand-shape { position: absolute; border-radius: 999px; }
+        .shape-1 { width: 180px; height: 340px; background-color: var(--warm-sand); left: 10%; top: 5%; animation: floatSlow 8s ease-in-out infinite; }
+        .shape-2 { width: 240px; height: 240px; background-color: var(--terracotta); right: 15%; bottom: 10%; animation: floatSlow 6s ease-in-out infinite reverse; }
+        .shape-3 { width: 120px; height: 120px; background-color: rgba(249, 248, 246, 0.8); left: 45%; top: 40%; animation: breatheSlow 5s ease-in-out infinite; }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-24px) rotate(3deg); }
+        }
+        @keyframes breatheSlow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        /* --- TANGGA KEHIDUPAN (7 SEASONS) --- */
+        .phases { padding: 120px 5%; background-color: var(--warm-sand); overflow: hidden; }
+        .phases-container { max-width: 1000px; margin: 0 auto; }
+        .phases-header { text-align: center; margin-bottom: 80px; }
+        .phases-header h2 { font-size: clamp(40px, 4vw, 56px); margin-bottom: 24px; }
+        .phases-header p { font-size: 20px; color: var(--charcoal); max-width: 600px; margin: 0 auto; }
+
+        .phase-list { display: flex; flex-direction: column; gap: 20px; } 
+        
+        .phase-card {
+            background-color: transparent; border: 2px solid #EAE6DF; border-radius: 20px;
+            padding: 32px; 
+            display: grid; grid-template-columns: 60px 1fr auto; gap: 24px; align-items: center; 
+            transition: all 0.3s ease;
+            max-width: 750px; 
+            opacity: 0;
+            animation: slideUpFade 0.8s ease forwards;
+        }
+        
+        .phase-card.active { border-color: var(--terracotta); background-color: #Fdfcfb; }
+        .phase-card.active .phase-num { color: var(--terracotta); }
+        
+        .phase-num { font-family: 'League Spartan', sans-serif; font-size: 40px; color: #D3D1CD; line-height: 1; }
+        .phase-content h3 { font-size: 24px; margin-bottom: 8px; } 
+        .phase-content p { font-size: 15px; color: var(--charcoal); margin: 0; line-height: 1.5; } 
+
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Logika Lintasan Berliku */
+        .step-1 { margin-left: 0%; animation-delay: 0.1s; }
+        .step-2 { margin-left: 12%; animation-delay: 0.2s; }
+        .step-3 { margin-left: 24%; animation-delay: 0.3s; }
+        .step-4 { margin-left: 16%; animation-delay: 0.4s; }
+        .step-5 { margin-left: 8%; animation-delay: 0.5s; }
+        .step-6 { margin-left: 0%; animation-delay: 0.6s; }
+        .step-7 { margin-left: auto; margin-right: auto; animation-delay: 0.7s; }
+
+        /* --- FOOTER CTA --- */
+        footer { background-color: var(--deep-forest); color: var(--warm-sand); padding: 96px 5% 64px; text-align: center; }
+        footer h2 { color: var(--warm-sand); font-size: 40px; margin-bottom: 32px; max-width: 800px; margin-left: auto; margin-right: auto;}
+        .footer-logo { margin: 64px auto 24px auto; display: flex; justify-content: center; }
+        footer p { color: rgba(249, 248, 246, 0.6); font-size: 14px;}
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .phil-container { grid-template-columns: 1fr; gap: 64px; }
+            .pattern-showcase { height: 350px; }
+            .shape-1 { width: 140px; height: 280px; }
+            .shape-2 { width: 180px; height: 180px; }
+            .shape-circle { width: 300px; height: 300px; top: -5%; right: -20%; }
+            .shape-pill { width: 200px; height: 400px; bottom: 0; right: -10%; }
+            .phase-card { grid-template-columns: 1fr; gap: 16px; text-align: left; padding: 24px; margin-left: 0 !important; margin-right: 0 !important; max-width: 100%;}
+            .phase-num { font-size: 32px; margin-bottom: -8px; }
+            .btn-sm, .btn-disabled { width: 100%; justify-content: center; }
+            .lang-switcher { top: 24px; right: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Language Switcher -->
+    <div class="lang-switcher">
+        <button class="lang-btn active" id="btn-id" onclick="setLanguage('id')">ID</button>
+        <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+    </div>
+
+    <!-- Navigasi -->
+    <nav>
+        <div class="logo-container">
+            <img src="https://drive.google.com/uc?export=view&id=1AfmZrJgnIGyyRD9ovL3BN50TC5fXyC6B" alt="Arah Tumbuh Logo" class="brand-img-logo">
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="shape-bg shape-circle"></div>
+        <div class="shape-bg shape-pill"></div>
+
+        <span class="hero-badge" id="hero-badge">A Digital Life Companion</span>
+        <h1 id="hero-title">Hidup tidak datang <br>dengan peta.</h1>
+        <p id="hero-desc">Setiap fase membawa pertanyaan baru – dan keberanian untuk tetap tumbuh, bersama. Menavigasi setiap persimpangan hidup Anda.</p>
+        <div>
+            <a href="#phases" class="btn btn-primary" id="hero-btn">Lihat Peta Perjalanan ↓</a>
+        </div>
+    </section>
+
+    <!-- Ruang Renung / Filosofi -->
+    <section class="philosophy">
+        <div class="phil-container">
+            <div class="pattern-showcase">
+                <div class="brand-shape shape-1"></div>
+                <div class="brand-shape shape-2"></div>
+                <div class="brand-shape shape-3"></div>
+            </div>
+            
+            <div class="phil-text">
+                <h2 id="phil-title">Semua orang bertumbuh. Tidak semua tetap searah.</h2>
+                <p id="phil-p1">Hubungan jarang berakhir karena bertengkar. Lebih sering, karena dua orang diam-diam tumbuh menjauh. Menjadi asing di ruang yang sama tanpa pernah bertengkar besar, sampai akhirnya terlambat untuk menyeberang.</p>
+                <p id="phil-p2">Arah Tumbuh hadir bukan untuk menyuruh kalian berhenti berubah, apalagi melebur menjadi satu. Kami menemani dua orang utuh yang terus berubah ini, agar tetap memilih arah yang sama, lagi dan lagi.</p>
+                <span class="highlight-text" id="phil-quote">"Bukan menjadi satu. Tetap dua. Dua orang utuh yang memilih arah yang sama, berulang kali."</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tangga Kehidupan (The 7 Seasons) -->
+    <section class="phases" id="phases">
+        <div class="phases-container">
+            <div class="phases-header">
+                <h2 id="phases-title">Tangga Kehidupan</h2>
+                <p id="phases-desc">Karena arah selalu lebih penting daripada kecepatan. Di musim mana hubungan Anda berada saat ini?</p>
+            </div>
+
+            <div class="phase-list">
+                
+                <!-- Musim 01 -->
+                <div class="phase-card active step-1">
+                    <div class="phase-num">01</div>
+                    <div class="phase-content">
+                        <h3 id="p1-title">Mendekat</h3>
+                        <p id="p1-desc">Dua orang saling mengukur apakah arah hidup mereka searah, sebelum mengikat janji. Membongkar yang tak terucap sejak awal.</p>
+                    </div>
+                    <div>
+                        <a href="sebelum-iya-asesmen.html" class="btn btn-primary btn-sm" style="color: var(--warm-sand);" id="p1-btn">Mulai Asesmen</a>
+                    </div>
+                </div>
+
+                <!-- Musim 02 -->
+                <div class="phase-card step-2">
+                    <div class="phase-num">02</div>
+                    <div class="phase-content">
+                        <h3 id="p2-title">Menyatu</h3>
+                        <p id="p2-desc">Dua sistem kebiasaan yang dibangun bertahun-tahun belajar berbagi satu atap dan menjadi "kita". Membangun fondasi awal.</p>
+                    </div>
+                    <div><button class="btn-disabled" disabled id="p2-btn">Segera Hadir</button></div>
+                </div>
+
+                <!-- Musim 03 -->
+                <div class="phase-card step-3">
+                    <div class="phase-num">03</div>
+                    <div class="phase-content">
+                        <h3 id="p3-title">Mengakar</h3>
+                        <p id="p3-desc">Membangun struktur hidup bersama: rumah, rutinitas, karier, dan pengasuhan. Menjaga nyala agar tidak menjadi sekadar rekan kerja.</p>
+                    </div>
+                    <div><button class="btn-disabled" disabled id="p3-btn">Segera Hadir</button></div>
+                </div>
+
+                <!-- Musim 04 -->
+                <div class="phase-card step-4">
+                    <div class="phase-num">04</div>
+                    <div class="phase-content">
+                        <h3 id="p4-title">Menjauh</h3>
+                        <p id="p4-desc">Pertumbuhan masing-masing diam-diam menarik ke arah berbeda. Membuat jarak yang tak terlihat menjadi terlihat untuk dibicarakan.</p>
+                    </div>
+                    <div><button class="btn-disabled" disabled id="p4-btn">Dalam Persiapan</button></div>
+                </div>
+
+                <!-- Musim 05 -->
+                <div class="phase-card step-5">
+                    <div class="phase-num">05</div>
+                    <div class="phase-content">
+                        <h3 id="p5-title">Memilih Ulang</h3>
+                        <p id="p5-desc">Secara sadar menemukan arah bersama lagi. Menegosiasi ulang hubungan dan memilih satu sama lain dengan versi diri yang sekarang.</p>
+                    </div>
+                    <div><button class="btn-disabled" disabled id="p5-btn">Dalam Persiapan</button></div>
+                </div>
+
+                <!-- Musim 06 -->
+                <div class="phase-card step-6">
+                    <div class="phase-num">06</div>
+                    <div class="phase-content">
+                        <h3 id="p6-title">Mendalam</h3>
+                        <p id="p6-desc">Hubungan yang sudah melewati badai dan memilih ulang. Matang, dalam, aman, dan terus membangun makna kehidupan berdua.</p>
+                    </div>
+                    <div><button class="btn-disabled" disabled id="p6-btn">Dalam Konsep</button></div>
+                </div>
+
+                <!-- Musim 07 -->
+                <div class="phase-card step-7">
+                    <div class="phase-num">07</div>
+                    <div class="phase-content">
+                        <h3 id="p7-title">Mewaris</h3>
+                        <p id="p7-desc">Hubungan menjadi sesuatu yang melampaui dirinya sendiri. Menjadi kisah, kebijaksanaan, dan teladan bagi yang baru memulai.</p>
+                    </div>
+                    <div><button class="btn-disabled" disabled id="p7-btn">Dalam Konsep</button></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer>
+        <h2 id="footer-title">Tumbuh bukan tentang menjadi sempurna, melainkan menjadi lebih selaras.</h2>
+        <a href="#phases" class="btn btn-primary" style="color: var(--warm-sand);" id="footer-btn">Temukan Arahmu</a>
+        
+        <div class="footer-logo">
+            <img src="https://drive.google.com/uc?export=view&id=1AfmZrJgnIGyyRD9ovL3BN50TC5fXyC6B" alt="Arah Tumbuh Logo" class="brand-img-logo" style="height: 48px;">
+        </div>
+        <p id="footer-copy">&copy; 2026 Arah Tumbuh. Menavigasi setiap fase kehidupan — bersama.</p>
+    </footer>
+
+    <!-- LOGIKA KAMUS BILINGUAL -->
+    <script>
+        const i18n = {
+            "id": {
+                "heroBadge": "A Digital Life Companion",
+                "heroTitle": "Hidup tidak datang <br>dengan peta.",
+                "heroDesc": "Setiap fase membawa pertanyaan baru – dan keberanian untuk tetap tumbuh, bersama. Menavigasi setiap persimpangan hidup Anda.",
+                "heroBtn": "Lihat Peta Perjalanan ↓",
+                
+                "philTitle": "Semua orang bertumbuh. Tidak semua tetap searah.",
+                "philP1": "Hubungan jarang berakhir karena bertengkar. Lebih sering, karena dua orang diam-diam tumbuh menjauh. Menjadi asing di ruang yang sama tanpa pernah bertengkar besar, sampai akhirnya terlambat untuk menyeberang.",
+                "philP2": "Arah Tumbuh hadir bukan untuk menyuruh kalian berhenti berubah, apalagi melebur menjadi satu. Kami menemani dua orang utuh yang terus berubah ini, agar tetap memilih arah yang sama, lagi dan lagi.",
+                "philQuote": "\"Bukan menjadi satu. Tetap dua. Dua orang utuh yang memilih arah yang sama, berulang kali.\"",
+                
+                "phasesTitle": "Tangga Kehidupan",
+                "phasesDesc": "Karena arah selalu lebih penting daripada kecepatan. Di musim mana hubungan Anda berada saat ini?",
+                
+                "p1Title": "Mendekat",
+                "p1Desc": "Dua orang saling mengukur apakah arah hidup mereka searah, sebelum mengikat janji. Membongkar yang tak terucap sejak awal.",
+                "p1Btn": "Mulai Asesmen",
+                
+                "p2Title": "Menyatu",
+                "p2Desc": "Dua sistem kebiasaan yang dibangun bertahun-tahun belajar berbagi satu atap dan menjadi \"kita\". Membangun fondasi awal.",
+                "p2Btn": "Segera Hadir",
+                
+                "p3Title": "Mengakar",
+                "p3Desc": "Membangun struktur hidup bersama: rumah, rutinitas, karier, dan pengasuhan. Menjaga nyala agar tidak menjadi sekadar rekan kerja.",
+                "p3Btn": "Segera Hadir",
+                
+                "p4Title": "Menjauh",
+                "p4Desc": "Pertumbuhan masing-masing diam-diam menarik ke arah berbeda. Membuat jarak yang tak terlihat menjadi terlihat untuk dibicarakan.",
+                "p4Btn": "Dalam Persiapan",
+                
+                "p5Title": "Memilih Ulang",
+                "p5Desc": "Secara sadar menemukan arah bersama lagi. Menegosiasi ulang hubungan dan memilih satu sama lain dengan versi diri yang sekarang.",
+                "p5Btn": "Dalam Persiapan",
+
+                "p6Title": "Mendalam",
+                "p6Desc": "Hubungan yang sudah melewati badai dan memilih ulang. Matang, dalam, aman, dan terus membangun makna kehidupan berdua.",
+                "p6Btn": "Dalam Konsep",
+
+                "p7Title": "Mewaris",
+                "p7Desc": "Hubungan menjadi sesuatu yang melampaui dirinya sendiri. Menjadi kisah, kebijaksanaan, dan teladan bagi yang baru memulai.",
+                "p7Btn": "Dalam Konsep",
+
+                "footerTitle": "Tumbuh bukan tentang menjadi sempurna, melainkan menjadi lebih selaras.",
+                "footerBtn": "Temukan Arahmu",
+                "footerCopy": "&copy; 2026 Arah Tumbuh. Menavigasi setiap fase kehidupan — bersama."
+            },
+            "en": {
+                "heroBadge": "A Digital Life Companion",
+                "heroTitle": "Life doesn't come <br>with a map.",
+                "heroDesc": "Every phase brings new questions – and the courage to keep growing, together. Navigating every intersection of your life.",
+                "heroBtn": "View Journey Map ↓",
+                
+                "philTitle": "Everyone grows. Not everyone stays in the same direction.",
+                "philP1": "Relationships rarely end because of fights. More often, it's because two people quietly drift apart. Becoming strangers in the same room without ever having a big fight, until it's too late to cross over.",
+                "philP2": "Arah Tumbuh is not here to tell you to stop changing, let alone merge into one. We accompany two whole people who keep changing, to keep choosing the same direction, time and again.",
+                "philQuote": "\"Not becoming one. Remaining two. Two whole people choosing the same direction, repeatedly.\"",
+                
+                "phasesTitle": "The Seasons of Life",
+                "phasesDesc": "Because direction is always more important than speed. Which season is your relationship in right now?",
+                
+                "p1Title": "Drawing Near",
+                "p1Desc": "Two people measuring if their life directions align, before making a vow. Uncovering the unspoken from the start.",
+                "p1Btn": "Start Assessment",
+                
+                "p2Title": "Becoming One Roof",
+                "p2Desc": "Two habit systems built over years learning to share one roof and become 'us'. Building the initial foundation.",
+                "p2Btn": "Coming Soon",
+                
+                "p3Title": "Putting Down Roots",
+                "p3Desc": "Building a shared life structure: home, routines, career, and parenting. Keeping the spark alive so you don't just become co-workers.",
+                "p3Btn": "Coming Soon",
+                
+                "p4Title": "The Quiet Drift",
+                "p4Desc": "Individual growth quietly pulls in different directions. Making the invisible distance visible to be talked about.",
+                "p4Btn": "In Preparation",
+                
+                "p5Title": "Re-Choosing",
+                "p5Desc": "Consciously finding a shared direction again. Renegotiating the relationship and choosing each other with your current versions.",
+                "p5Btn": "In Preparation",
+
+                "p6Title": "The Deepening",
+                "p6Desc": "A relationship that has weathered the storm and chosen again. Mature, deep, secure, and continuously building shared meaning.",
+                "p6Btn": "In Concept",
+
+                "p7Title": "Passing It On",
+                "p7Desc": "The relationship becomes something beyond itself. Becoming a story, wisdom, and an example for those just starting.",
+                "p7Btn": "In Concept",
+
+                "footerTitle": "Growing is not about becoming perfect, but becoming more aligned.",
+                "footerBtn": "Find Your Direction",
+                "footerCopy": "&copy; 2026 Arah Tumbuh. Navigating every life phase — together."
+            }
+        };
+
+        function setLanguage(lang) {
+            // Update buttons
+            document.getElementById('btn-id').classList.toggle('active', lang === 'id');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+            // Update texts
+            const t = i18n[lang];
+            document.getElementById('hero-badge').innerHTML = t.heroBadge;
+            document.getElementById('hero-title').innerHTML = t.heroTitle;
+            document.getElementById('hero-desc').innerHTML = t.heroDesc;
+            document.getElementById('hero-btn').innerHTML = t.heroBtn;
+            
+            document.getElementById('phil-title').innerHTML = t.philTitle;
+            document.getElementById('phil-p1').innerHTML = t.philP1;
+            document.getElementById('phil-p2').innerHTML = t.philP2;
+            document.getElementById('phil-quote').innerHTML = t.philQuote;
+            
+            document.getElementById('phases-title').innerHTML = t.phasesTitle;
+            document.getElementById('phases-desc').innerHTML = t.phasesDesc;
+            
+            document.getElementById('p1-title').innerHTML = t.p1Title;
+            document.getElementById('p1-desc').innerHTML = t.p1Desc;
+            document.getElementById('p1-btn').href = 'sebelum-iya-asesmen.html';
+            
+            document.getElementById('p2-title').innerHTML = t.p2Title;
+            document.getElementById('p2-desc').innerHTML = t.p2Desc;
+            document.getElementById('p2-btn').innerHTML = t.p2Btn;
+            
+            document.getElementById('p3-title').innerHTML = t.p3Title;
+            document.getElementById('p3-desc').innerHTML = t.p3Desc;
+            document.getElementById('p3-btn').innerHTML = t.p3Btn;
+            
+            document.getElementById('p4-title').innerHTML = t.p4Title;
+            document.getElementById('p4-desc').innerHTML = t.p4Desc;
+            document.getElementById('p4-btn').innerHTML = t.p4Btn;
+
+            document.getElementById('p5-title').innerHTML = t.p5Title;
+            document.getElementById('p5-desc').innerHTML = t.p5Desc;
+            document.getElementById('p5-btn').innerHTML = t.p5Btn;
+
+            document.getElementById('p6-title').innerHTML = t.p6Title;
+            document.getElementById('p6-desc').innerHTML = t.p6Desc;
+            document.getElementById('p6-btn').innerHTML = t.p6Btn;
+
+            document.getElementById('p7-title').innerHTML = t.p7Title;
+            document.getElementById('p7-desc').innerHTML = t.p7Desc;
+            document.getElementById('p7-btn').innerHTML = t.p7Btn;
+
+            document.getElementById('footer-title').innerHTML = t.footerTitle;
+            document.getElementById('footer-btn').innerHTML = t.footerBtn;
+            document.getElementById('footer-copy').innerHTML = t.footerCopy;
+        }
+
+        // Init default language
+        setLanguage('id');
+    </script>
+</body>
+</html>

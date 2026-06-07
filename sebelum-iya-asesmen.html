@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sebelum Iya — Asesmen | Arah Tumbuh</title>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ================================================
+           SISTEM WARNA & FONDASI
+        ================================================ */
+        :root {
+            --warm-sand: #F9F8F6;
+            --deep-forest: #1B2A26;
+            --terracotta: #C86A4C;
+            --charcoal: #33363F;
+            --border: #EAE6DF;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--warm-sand);
+            color: var(--charcoal);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 32px 16px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ================================================
+           CONTAINER
+        ================================================ */
+        .container {
+            background-color: #FFFFFF;
+            width: 100%;
+            max-width: 640px;
+            padding: 48px;
+            border-radius: 28px;
+            border: 2px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ================================================
+           TIPOGRAFI
+        ================================================ */
+        h1, h2, h3 {
+            font-family: 'League Spartan', sans-serif;
+            color: var(--deep-forest);
+            line-height: 1.15;
+            margin-bottom: 16px;
+        }
+        h1 { font-size: 44px; }
+        h2 { font-size: 28px; }
+        h3 { font-size: 20px; }
+        p { font-size: 16px; margin-bottom: 24px; color: var(--charcoal); }
+
+        .brand-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .brand-logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .manifesto-quote {
+            font-style: italic;
+            font-weight: 600;
+            color: var(--terracotta);
+            border-left: 3px solid var(--terracotta);
+            padding-left: 18px;
+            margin: 24px 0 36px;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--terracotta);
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        /* ================================================
+           LANGUAGE SWITCHER
+        ================================================ */
+        .lang-switcher {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 32px;
+            background: var(--warm-sand);
+            padding: 5px;
+            border-radius: 999px;
+            border: 2px solid var(--border);
+            width: fit-content;
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            padding: 7px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--charcoal);
+            cursor: pointer;
+            border-radius: 999px;
+            transition: all 0.25s;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .lang-btn.active {
+            background: var(--terracotta);
+            color: #fff;
+        }
+
+        /* ================================================
+           TOMBOL
+        ================================================ */
+        .btn {
+            background-color: var(--deep-forest);
+            color: #fff;
+            border: none;
+            padding: 16px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 999px;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+            transition: opacity 0.25s, transform 0.2s;
+            font-family: 'Open Sans', sans-serif;
+            margin-top: 8px;
+        }
+        .btn:hover { opacity: 0.88; transform: translateY(-2px); }
+        .btn-primary { background-color: var(--terracotta); }
+        .btn:disabled, .btn[disabled] {
+            background-color: #D3D1CD;
+            color: #999;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-back {
+            background: none;
+            border: none;
+            color: var(--terracotta);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 28px;
+            font-family: 'Open Sans', sans-serif;
+            transition: opacity 0.2s;
+        }
+        .btn-back:hover { opacity: 0.7; }
+
+        /* ================================================
+           FORMULIR
+        ================================================ */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--deep-forest);
+        }
+        .form-group input {
+            width: 100%;
+            padding: 15px 18px;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            font-size: 15px;
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--warm-sand);
+            color: var(--charcoal);
+            transition: border-color 0.25s, background-color 0.25s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--terracotta);
+            background-color: #fff;
+        }
+
+        /* ================================================
+           PROGRESS BAR
+        ================================================ */
+        .progress-wrap {
+            margin-bottom: 32px;
+        }
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 600;
+            color: #aaa;
+            margin-bottom: 8px;
+        }
+        .progress-bar {
+            height: 5px;
+            background: var(--border);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--terracotta);
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 999px;
+        }
+
+        /* ================================================
+           PERTANYAAN & OPSI
+        ================================================ */
+        .question-text {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 22px;
+            color: var(--deep-forest);
+            margin-bottom: 8px;
+            line-height: 1.35;
+        }
+        .question-subtext {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            text-align: left;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            background: #fff;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Open Sans', sans-serif;
+            color: var(--charcoal);
+            line-height: 1.45;
+        }
+        .option-btn:hover { border-color: var(--terracotta); background: var(--warm-sand); }
+        .option-btn.selected { border-color: var(--terracotta); background-color: var(--warm-sand); font-weight: 600; }
+
+        .check-box {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            margin-right: 14px;
+            margin-top: 2px;
+            transition: all 0.2s;
+        }
+        .option-btn.selected .check-box {
+            background-color: var(--terracotta);
+            border-color: var(--terracotta);
+        }
+
+        textarea.open-q {
+            width: 100%;
+            padding: 20px;
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            font-size: 15px;
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--warm-sand);
+            color: var(--deep-forest);
+            transition: all 0.25s;
+            resize: vertical;
+            min-height: 150px;
+            line-height: 1.65;
+        }
+        textarea.open-q:focus {
+            outline: none;
+            border-color: var(--terracotta);
+            background-color: #fff;
+        }
+
+        /* ================================================
+           LAYAR HASIL
+        ================================================ */
+        .result-pattern-label {
+            display: inline-block;
+            background: var(--warm-sand);
+            border: 2px solid var(--border);
+            border-radius: 999px;
+            padding: 6px 18px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--terracotta);
+            margin-bottom: 16px;
+        }
+        .result-desc-pill {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--terracotta);
+            margin-bottom: 20px;
+        }
+        .result-insight {
+            font-size: 16px;
+            line-height: 1.75;
+            color: var(--charcoal);
+            margin-bottom: 0;
+        }
+        .paywall-box {
+            background: var(--warm-sand);
+            border: 2px solid var(--border);
+            border-radius: 24px;
+            padding: 32px;
+            margin-top: 32px;
+        }
+        .paywall-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0 28px;
+        }
+        .paywall-list li {
+            font-size: 15px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 1.5;
+        }
+        .paywall-list li::before {
+            content: "•";
+            color: var(--terracotta);
+            font-weight: bold;
+            font-size: 22px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .divider {
+            border: none;
+            border-top: 2px solid var(--border);
+            margin: 32px 0;
+        }
+
+        /* ================================================
+           ANIMASI
+        ================================================ */
+        .hidden { display: none !important; }
+        .fade-in { animation: fadeIn 0.35s ease forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ================================================
+           RESPONSIVE
+        ================================================ */
+        @media (max-width: 600px) {
+            body { padding: 16px 12px; }
+            .container { padding: 32px 24px; border-radius: 20px; }
+            h1 { font-size: 34px; }
+            .question-text { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container fade-in" id="app">
+
+    <!-- ================================================
+         LAYAR 1: INTRO
+    ================================================ -->
+    <div id="intro-screen">
+        <div class="brand-logo">
+            <img src="https://drive.google.com/uc?export=view&id=1AfmZrJgnIGyyRD9ovL3BN50TC5fXyC6B" alt="Arah Tumbuh" onerror="this.style.display='none'">
+        </div>
+
+        <!-- Language switcher -->
+        <div class="lang-switcher">
+            <button class="lang-btn active" id="btn-id" onclick="setLang('id')">🇮🇩 ID</button>
+            <button class="lang-btn" id="btn-en" onclick="setLang('en')">🇬🇧 EN</button>
+        </div>
+
+        <span class="section-label" id="intro-label">Asesmen Musim 1: Mendekat</span>
+        <h1 id="intro-title">Sebelum Iya.</h1>
+
+        <p id="intro-desc">Tidak ada jawaban yang benar. Yang paling berguna adalah yang paling jujur. Ini adalah alat untuk memetakan apa yang mungkin ikut masuk ke pernikahan — kalau tidak pernah benar-benar disadari atau dibicarakan.</p>
+
+        <div class="manifesto-quote" id="intro-quote">
+            "Bukan menjadi satu. Tetap dua. Dua orang utuh yang memilih arah yang sama, berulang kali."
+        </div>
+
+        <button class="btn btn-primary" id="intro-btn" onclick="showScreen('form-screen')">Mulai Memetakan</button>
+    </div>
+
+    <!-- ================================================
+         LAYAR 2: FORMULIR DATA DIRI
+    ================================================ -->
+    <div id="form-screen" class="hidden">
+        <button class="btn-back" onclick="showScreen('intro-screen')">← <span id="back-label">Kembali</span></button>
+        <h2 id="form-title">Ke mana hasil pemetaan ini akan dikirim?</h2>
+        <p id="form-desc">Kami butuh data Anda untuk mengirimkan rekapitulasi singkat setelah asesmen selesai.</p>
+
+        <div class="form-group">
+            <label id="label-name">Nama Lengkap</label>
+            <input type="text" id="user-name" placeholder="Misal: Arah">
+        </div>
+        <div class="form-group">
+            <label id="label-wa">Nomor WhatsApp</label>
+            <input type="tel" id="user-wa" placeholder="Misal: 081234567890">
+        </div>
+        <div class="form-group">
+            <label id="label-email">Alamat Email</label>
+            <input type="email" id="user-email" placeholder="email@kamu.com">
+        </div>
+
+        <button class="btn btn-primary" id="form-btn" onclick="startQuiz()">Lanjut ke Pertanyaan</button>
+    </div>
+
+    <!-- ================================================
+         LAYAR 3: KUIS
+    ================================================ -->
+    <div id="quiz-screen" class="hidden">
+        <button class="btn-back hidden" id="back-btn" onclick="previousQuestion()">← <span id="prev-label">Sebelumnya</span></button>
+
+        <div class="progress-wrap">
+            <div class="progress-meta">
+                <span id="progress-label">Pertanyaan</span>
+                <span id="progress-count">1 / 22</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <span class="section-label" id="q-section">BAGIAN</span>
+        <div class="question-text" id="q-text">Memuat pertanyaan...</div>
+        <span class="question-subtext" id="q-subtext"></span>
+        <div id="options-container"></div>
+        <button id="next-btn" class="btn btn-primary hidden" style="margin-top: 16px;" onclick="nextQuestion()">Lanjut</button>
+    </div>
+
+    <!-- ================================================
+         LAYAR 4: HASIL
+    ================================================ -->
+    <div id="result-screen" class="hidden">
+        <div class="brand-logo" style="margin-bottom: 24px;">
+            <img src="https://drive.google.com/uc?export=view&id=1AfmZrJgnIGyyRD9ovL3BN50TC5fXyC6B" alt="Arah Tumbuh" onerror="this.style.display='none'">
+        </div>
+
+        <span class="section-label" id="result-section-label">DINAMIKA HUBUNGANMU</span>
+        <div class="result-pattern-label" id="result-pattern-badge">Pola</div>
+        <h2 id="result-title">Menghitung...</h2>
+        <p class="result-desc-pill" id="result-desc"></p>
+        <p class="result-insight" id="result-insight"></p>
+
+        <hr class="divider">
+
+        <div class="paywall-box" id="paywall-box">
+            <h3 id="paywall-title" style="font-family: 'League Spartan', sans-serif; color: var(--deep-forest); margin-bottom: 8px;">Buka Peta Dinamika Lengkap</h3>
+            <p id="paywall-desc" style="font-size: 14px; color: #888; margin-bottom: 0;">Dapatkan dokumen personalisasi yang berisi:</p>
+            <ul class="paywall-list" id="paywall-list">
+                <li><strong>Cermin Psikologis:</strong> Analisis mendalam pola ini dalam konteks hubunganmu.</li>
+                <li><strong>Blind Spot:</strong> Konsekuensi yang mengintai jika pola ini dibiarkan.</li>
+                <li><strong>Framework Percakapan:</strong> Panduan konkret untuk membahas ini bersama pasangan.</li>
+            </ul>
+            <a href="#" id="lynk-btn" class="btn btn-primary" target="_blank" rel="noopener">Buka Hasil Lengkap — Rp 34.900</a>
+        </div>
+    </div>
+
+</div><!-- /container -->
+
+<script>
+/* ====================================================
+   1. KONFIGURASI BAHASA (ID / EN)
+==================================================== */
+const LANG_PACK = {
+    id: {
+        introLabel: "Asesmen Musim 1: Mendekat",
+        introTitle: "Sebelum Iya.",
+        introDesc: "Tidak ada jawaban yang benar. Yang paling berguna adalah yang paling jujur. Ini adalah alat untuk memetakan apa yang mungkin ikut masuk ke pernikahan — kalau tidak pernah benar-benar disadari atau dibicarakan.",
+        introQuote: '"Bukan menjadi satu. Tetap dua. Dua orang utuh yang memilih arah yang sama, berulang kali."',
+        introBtn: "Mulai Memetakan",
+        backLabel: "Kembali",
+        formTitle: "Ke mana hasil pemetaan ini akan dikirim?",
+        formDesc: "Kami butuh data Anda untuk mengirimkan rekapitulasi singkat setelah asesmen selesai.",
+        labelName: "Nama Lengkap",
+        labelWa: "Nomor WhatsApp",
+        labelEmail: "Alamat Email",
+        namePlaceholder: "Misal: Arah",
+        waPlaceholder: "Misal: 081234567890",
+        emailPlaceholder: "email@kamu.com",
+        formBtn: "Lanjut ke Pertanyaan",
+        prevLabel: "Sebelumnya",
+        progressLabel: "Pertanyaan",
+        nextBtn: "Lanjut",
+        doneBtn: "Selesai & Lihat Hasil",
+        pickMax: (n) => `Pilih Maksimal ${n}`,
+        textPlaceholder: "Tuliskan di sini (opsional)...",
+        validationAll: "Mohon isi semua data.",
+        validationWa: "Nomor WA hanya boleh angka.",
+        validationEmail: "Format email harus @...com",
+        resultSectionLabel: "DINAMIKA HUBUNGANMU",
+        savingMsg: "Menghitung & Menyimpan...",
+        savingDesc: "Mohon tunggu, kami sedang memetakan data Anda...",
+        overviewOk: "Engine kami telah selesai memetakan dinamika hubungan Anda.",
+        overviewFail: "Hasil telah terpetakan. (Catatan: Terjadi kendala saat menyimpan, namun hasil Anda tetap bisa dilihat.)",
+        paywallTitle: "Buka Peta Dinamika Lengkap",
+        paywallDesc: "Dapatkan dokumen personalisasi yang berisi:",
+        paywallItems: [
+            "<strong>Cermin Psikologis:</strong> Analisis mendalam pola ini dalam konteks hubunganmu.",
+            "<strong>Blind Spot:</strong> Konsekuensi yang mengintai jika pola ini dibiarkan.",
+            "<strong>Framework Percakapan:</strong> Panduan konkret untuk membahas ini bersama pasangan."
+        ],
+        paywallBtn: "Buka Hasil Lengkap — Rp 34.900"
+    },
+    en: {
+        introLabel: "Assessment Season 1: Drawing Near",
+        introTitle: "Before Yes.",
+        introDesc: "There are no right answers. The most useful ones are the most honest. This is a tool to map what might follow you into marriage — if it's never truly been acknowledged or talked about.",
+        introQuote: '"Not becoming one. Remaining two. Two whole people choosing the same direction, repeatedly."',
+        introBtn: "Start Mapping",
+        backLabel: "Back",
+        formTitle: "Where should we send your results?",
+        formDesc: "We need your details to send a brief recap once the assessment is complete.",
+        labelName: "Full Name",
+        labelWa: "WhatsApp Number",
+        labelEmail: "Email Address",
+        namePlaceholder: "e.g. Alex",
+        waPlaceholder: "e.g. 081234567890",
+        emailPlaceholder: "email@you.com",
+        formBtn: "Continue to Questions",
+        prevLabel: "Previous",
+        progressLabel: "Question",
+        nextBtn: "Continue",
+        doneBtn: "Finish & See Results",
+        pickMax: (n) => `Choose up to ${n}`,
+        textPlaceholder: "Write here (optional)...",
+        validationAll: "Please fill in all fields.",
+        validationWa: "WhatsApp number must contain only digits.",
+        validationEmail: "Email format must be @...com",
+        resultSectionLabel: "YOUR RELATIONSHIP DYNAMIC",
+        savingMsg: "Calculating & Saving...",
+        savingDesc: "Please wait, we're mapping your data...",
+        overviewOk: "Our engine has finished mapping your relationship dynamic.",
+        overviewFail: "Your results have been mapped. (Note: There was an issue saving to the database, but your results are still visible.)",
+        paywallTitle: "Unlock Your Full Dynamic Map",
+        paywallDesc: "Get a personalized document containing:",
+        paywallItems: [
+            "<strong>Psychological Mirror:</strong> In-depth analysis of this pattern in the context of your relationship.",
+            "<strong>Blind Spot:</strong> Consequences lurking if this pattern is left unaddressed.",
+            "<strong>Conversation Framework:</strong> Concrete guide for discussing this with your partner."
+        ],
+        paywallBtn: "Open Full Results — Rp 49,000"
+    }
+};
+
+/* ====================================================
+   2. DATABASE POLA — BILINGUAL
+==================================================== */
+const PATTERNS_CONF = {
+    "P01": {
+        title: { id: "Si Penjaga Damai",       en: "The Peacekeeper" },
+        desc:  { id: "Memilih Diam: Merawat Kedamaian, Menumpuk Kekecewaan.", en: "Choosing Silence: Keeping the Peace, Stockpiling Disappointment." },
+        insight: {
+            id: "Menahan perasaan demi menghindari konflik sering terasa aman, tapi apa yang tidak diucapkan tidak akan benar-benar hilang — ia hanya mengendap dan perlahan menciptakan jarak. Pasanganmu tidak bisa memperbaiki apa yang tidak ia ketahui, dan kedamaian yang dibangun di atas keheningan akan selalu rapuh.",
+            en: "Holding back feelings to avoid conflict often feels safe, but what goes unspoken doesn't disappear — it settles and slowly creates distance. Your partner can't fix what they don't know about, and peace built on silence will always be fragile."
+        },
+        link: "http://lynk.id/arahtumbuh/mg2w5nk2pkn5/checkout",
+        conds: [["Q1",["A","D"]], ["Q5",["D","E"]], ["Q9",["C","D"]]]
+    },
+    "P02": {
+        title: { id: "Si Yang Masih Di Sini",   en: "The One Who Stays" },
+        desc:  { id: "Hadir Waktu Susah: Tetap Ada Meski Rasanya Lebih Mudah Pergi.", en: "Present Through Hardship: Staying Even When Leaving Feels Easier." },
+        insight: {
+            id: "Kemampuanmu untuk bertahan dan kembali setelah perselisihan adalah kekuatan dan kedewasaan yang mahal. Namun, jangan lupa bahwa kamu juga berhak untuk ditenangkan, bukan hanya menjadi pihak yang menenangkan. Kehadiran utuh berjalan dua arah.",
+            en: "Your ability to hold on and come back after conflict is a rare and valuable strength. But don't forget that you also deserve to be comforted, not just to be the one doing the comforting. Full presence goes both ways."
+        },
+        link: "http://lynk.id/arahtumbuh/w16po8dd13v8/checkout",
+        conds: [["Q3",["A"]], ["Q6",["A"]], ["Q7",["A","B"]]]
+    },
+    "P03": {
+        title: { id: "Si Pejuang Mandiri",      en: "The Independent Fighter" },
+        desc:  { id: "Terbiasa Kuat: Mandiri sampai Lupa Bahwa Boleh Bersandar.", en: "Used to Being Strong: Independent Until Forgetting It's OK to Lean." },
+        insight: {
+            id: "Mandiri itu kekuatan, tapi berdua itu lebih kuat. Pernikahan bukanlah tentang siapa yang paling kuat menahan beban sendirian. Membiarkan orang lain ikut membantu bukan berarti kamu lemah — melainkan cara memberi ruang bagi pasanganmu untuk hadir.",
+            en: "Independence is strength, but togetherness is stronger. Marriage isn't about who can carry the most weight alone. Letting someone else help isn't weakness — it's giving your partner the room to show up."
+        },
+        link: "http://lynk.id/arahtumbuh/5o5mwn7oe6ym/checkout",
+        conds: [["Q1",["C"]], ["Q3",["D"]], ["Q12",["B"]]]
+    },
+    "P04": {
+        title: { id: "Si Penjaga Diri",         en: "The Self-Guardian" },
+        desc:  { id: "Ingin Diterima Sepenuhnya: Tapi Belum Siap Menunjukkan Semuanya.", en: "Wanting Full Acceptance: But Not Yet Ready to Show Everything." },
+        insight: {
+            id: "Membangun lapisan pelindung adalah caramu bertahan, namun menutup diri selamanya justru menghalangimu dari keintiman sejati. Hubungan yang baik bukan yang menerima versi terbaikmu saja, tapi yang bertumbuh bersama versi paling jujurmu.",
+            en: "Building protective layers is how you've survived — but staying closed forever keeps you from true intimacy. A good relationship isn't one that only accepts your best version, but one that grows alongside your most honest one."
+        },
+        link: "http://lynk.id/arahtumbuh/xq42orwnz8yp/checkout",
+        conds: [["Q12",["B"]], ["Q21",["D","E"]]]
+    },
+    "P05": {
+        title: { id: "Si Peredam",              en: "The Dampener" },
+        desc:  { id: "Penjaga Suasana: Selalu Bikin Semua Orang Oke, Kecuali Dirinya.", en: "Atmosphere Keeper: Always Making Everyone OK, Except Themselves." },
+        insight: {
+            id: "Kamu ahli membuat suasana oke, tapi jangan lupa dirimu juga berhak tidak oke. Hubungan yang sehat tidak mengharuskanmu selalu kuat — hubungan terasa lebih nyata ketika kamu mengizinkan dirimu berhenti meredam dan membiarkan pasanganmu bergantian menjaga.",
+            en: "You're skilled at keeping the atmosphere okay — but don't forget you're also allowed to not be okay. A healthy relationship doesn't require you to always be strong. It feels more real when you let yourself stop dampening and let your partner take a turn."
+        },
+        link: "http://lynk.id/arahtumbuh/rxj4o7e8g1zq/checkout",
+        conds: [["Q8",["B","C"]], ["Q6",["C","E"]], ["Q5",["D"]]]
+    },
+    "P06": {
+        title: { id: "Si Takut Tidak Cukup",    en: "The Fear of Not Enough" },
+        desc:  { id: "Hadir sepenuhnya, tapi dihantui rasa tak pantas.", en: "Fully present, but haunted by a sense of unworthiness." },
+        insight: {
+            id: "Kamu sudah cukup, dan tidak perlu terus membuktikan diri untuk layak dicintai. Pasanganmu memilihmu bukan karena siapa yang kamu bayangkan harus menjadi, tapi karena kamu apa adanya. Berhentilah sejenak — kamu sudah cukup tinggi.",
+            en: "You are already enough, and you don't need to keep proving yourself to deserve love. Your partner chose you not because of who you imagine you should be, but because of who you are. Pause — you've already cleared the bar."
+        },
+        link: "http://lynk.id/arahtumbuh/nv506k6erwr4/checkout",
+        conds: [["Q12",["C"]], ["Q19",["A"]], ["Q15",["C","D"]]]
+    },
+    "P07": {
+        title: { id: "Si Pengirim Sinyal",      en: "The Signal Sender" },
+        desc:  { id: "Berharap Ditangkap: Sudah Kasih Tanda Berkali-Kali, Tapi Capek Tidak Pernah Cukup.", en: "Hoping to Be Caught: Sent Signals Repeatedly, But Tired of Never Being Understood." },
+        insight: {
+            id: "Sinyal halus memang manis, tapi pasanganmu bukan pembaca pikiran. Kadang kata-kata lugas adalah jembatan tercepat menuju pemahaman. Jangan biarkan frustrasi menumpuk karena kode yang tak tertangkap.",
+            en: "Subtle signals can be sweet, but your partner isn't a mind reader. Sometimes direct words are the fastest bridge to understanding. Don't let frustration pile up over signals that never landed."
+        },
+        link: "http://lynk.id/arahtumbuh/wd6yx0673dg7/checkout",
+        conds: [["Q2",["C","D"]], ["Q9",["E"]]]
+    },
+    "P08": {
+        title: { id: "Si Beda Nilai",           en: "The Values Mismatch" },
+        desc:  { id: "Prinsip hidupnya belum pernah benar-benar diselaraskan.", en: "Core principles that have never truly been aligned." },
+        insight: {
+            id: "Perbedaan prinsip mendasar bukanlah tanda akhir, melainkan undangan untuk membicarakannya dengan niat memahami, bukan saling mengalahkan. Perbedaan yang tidak dibicarakan hanya sedang menunggu menjadi bom waktu.",
+            en: "Fundamental differences in values aren't a death sentence — they're an invitation to talk with intent to understand, not to win. Differences left unspoken are just ticking time bombs."
+        },
+        link: "http://lynk.id/arahtumbuh/7pl4wk2wwlnm/checkout",
+        conds: [["Q22",["multi"]], ["Q17",["B","C"]], ["Q19",["C","D"]]]
+    },
+    "P09": {
+        title: { id: "Si Satu Yang Disimpan",   en: "The One Thing Kept" },
+        desc:  { id: "Sudah Cerita Banyak: Tapi Ada Satu Hal yang Belum Pernah Keluar.", en: "Shared So Much: But One Thing Has Never Come Out." },
+        insight: {
+            id: "Menjaga ruang pribadi adalah hakmu, namun tanyakanlah apakah ruang itu tertutup karena kamu memang belum siap, atau karena kamu ragu akan rasa aman hubungan ini. Tidak harus buka semuanya hari ini, tapi jujurlah pada dirimu sendiri.",
+            en: "Keeping private space is your right — but ask yourself whether that space is closed because you're not ready, or because you're unsure this relationship is safe. You don't have to open everything today, but be honest with yourself."
+        },
+        link: "http://lynk.id/arahtumbuh/ng2eq7wgj43x/checkout",
+        conds: [["Q21",["C","D","E"]], ["Q20",["E","F"]], ["Q14",["D"]]]
+    },
+    "P10": {
+        title: { id: "Si Pengatur Dalam",       en: "The Inner Controller" },
+        desc:  { id: "Standar yang Jelas: Tapi Masih Hidup di Dalam Kepala.", en: "Clear Standards: But Still Living Inside Their Head." },
+        insight: {
+            id: "Rencana terbaik pun tidak berguna kalau hanya tersimpan di satu kepala dan menjadi tuntutan tanpa dibicarakan. Pasanganmu tidak bisa memenuhi harapan yang tidak pernah mereka dengar. Mulailah ceritakan peta di kepalamu.",
+            en: "The best plans are useless if they only live in one head and become demands without ever being spoken. Your partner can't meet expectations they've never heard. Start sharing the map inside your mind."
+        },
+        link: "http://lynk.id/arahtumbuh/92j4wy8m9mg8/checkout",
+        conds: [["Q11",["A"]], ["Q17",["A"]], ["Q18",["C"]]]
+    },
+    "P11": {
+        title: { id: "Si Angka Rapi",           en: "The Neat Numbers" },
+        desc:  { id: "Mandiri Finansial, Tapi Gagap Transparansi Total.", en: "Financially Independent, But Stumbling on Full Transparency." },
+        insight: {
+            id: "Transparansi finansial adalah bentuk kepercayaan terdalam. Berbagi angka tidak harus berarti menyerahkan kendali, tapi mengajak pasangan duduk di meja yang sama untuk membangun sistem berdua.",
+            en: "Financial transparency is one of the deepest forms of trust. Sharing numbers doesn't mean surrendering control — it means inviting your partner to the same table to build a system together."
+        },
+        link: "http://lynk.id/arahtumbuh/yzkp55wqkdqv/checkout",
+        conds: [["Q14",["C","D","E"]], ["Q15",["C","D"]], ["Q16",["C","D"]]]
+    },
+    "P12": {
+        title: { id: "Si Dua Rumah",            en: "The Two Households" },
+        desc:  { id: "Sayang Keluarga, Tapi Belum Tahu Harus Berdiri di Mana.", en: "Loves Family, But Doesn't Know Where to Stand Yet." },
+        insight: {
+            id: "Membangun batas dengan keluarga bukanlah pengkhianatan, melainkan kedewasaan untuk melindungi rumah tangga baru kalian. Kalian perlu berdiri sebagai satu tim, bukan dua keluarga yang menarik ke arah berbeda.",
+            en: "Setting boundaries with family isn't betrayal — it's the maturity needed to protect your new household. You need to stand as one team, not two families pulling in different directions."
+        },
+        link: "http://lynk.id/arahtumbuh/5x5nwwvxgn4l/checkout",
+        conds: [["Q16",["C","D"]], ["Q17",["B","C"]], ["Q18",["C","D"]]]
+    },
+    "P13": {
+        title: { id: "Si Belum Seatap",         en: "The Not Yet Under One Roof" },
+        desc:  { id: "Cocok di Banyak Hal: Tapi Ritme Sehari-Hari Belum Diuji.", en: "Compatible in Many Ways: But Daily Rhythms Remain Untested." },
+        insight: {
+            id: "Ritme di bawah satu atap adalah kanvas kosong yang perlu dirancang bersama. Tidak ada ritme sempurna yang langsung terbentuk — yang ada hanyalah dua orang yang bersedia bersabar dan bernegosiasi dalam prosesnya.",
+            en: "The rhythm of life under one roof is a blank canvas that needs to be designed together. No perfect rhythm forms overnight — there are only two people willing to be patient and negotiate through the process."
+        },
+        link: "http://lynk.id/arahtumbuh/1oz1wwokoyng/checkout",
+        conds: [["Q10",["D","E"]], ["Q11",["C","E"]], ["Q12",["D","G"]]]
+    }
+};
+
+/* ====================================================
+   3. BANK SOAL — BILINGUAL
+==================================================== */
+const QUESTIONS = {
+    id: [
+        { id:"Q1", section:"CARA KAMU DI HUBUNGAN DEKAT", type:"single",
+          question:"Kalau lagi ada sesuatu yang berat di kepala — entah kerjaan, keluarga, atau sesuatu yang mengecewakan — kamu biasanya:",
+          options:["Langsung cerita ke orang yang paling dekat","Tunggu agak reda dulu, baru cerita","Lebih sering selesaikan sendiri — jarang merasa perlu cerita","Lebih nyaman cerita ke teman daripada ke orang terdekat","Bingung mau cerita ke siapa"] },
+        { id:"Q2", section:"CARA KAMU DI HUBUNGAN DEKAT", type:"single",
+          question:"Kalau kamu lagi nggak nyaman atau mulai capek dalam suatu situasi sosial, biasanya kamu:",
+          options:["Bilang langsung ke orang terdekat bahwa kamu butuh keluar sebentar","Tahan sampai selesai, tidak mau merepotkan","Kasih sinyal halus, berharap dia nangkap sendiri","Jadi lebih diam atau jutek tanpa sadar","Cari alasan keluar — toilet, telepon, atau apapun"] },
+        { id:"Q3", section:"CARA KAMU DI HUBUNGAN DEKAT", type:"single",
+          question:"Saat kamu lagi capek secara emosi, biasanya kamu paling nyaman kalau orang terdekatmu:",
+          options:["Didengarkan — bukan langsung dikasih solusi","Dibantu cari jalan keluar","Ditemani diam-diam, tidak perlu banyak kata","Dikasih ruang dulu sebelum kamu siap cerita","Belum tahu apa yang kamu butuhkan"] },
+        { id:"Q4", section:"CARA KAMU DI HUBUNGAN DEKAT", type:"single",
+          question:"Kalau orang terdekatmu terlihat sedang ada masalah tapi belum cerita, biasanya kamu:",
+          options:["Tanya langsung karena tidak bisa pura-pura tidak lihat","Tunggu sampai dia sendiri yang buka","Ajak makan atau jalan dulu supaya suasana cair","Seringnya tidak langsung sadar — baru tahu kalau dia bilang"] },
+        { id:"Q5", section:"SAAT ADA YANG TIDAK BERES", type:"single",
+          question:"Kalau ada sesuatu dalam hubungan yang sempat ganggu pikiranmu, biasanya kamu:",
+          options:["Langsung bilang","Pilih mana yang perlu dibahas, mana yang tidak perlu","Tunggu timing yang pas dulu","Biarkan lewat supaya tidak jadi besar","Simpan sendiri — entah sampai kapan"] },
+        { id:"Q6", section:"SAAT ADA YANG TIDAK BERES", type:"single",
+          question:"Kalau lagi ada konflik atau salah paham dengan pasanganmu, biasanya akhirnya:",
+          subtext:"Kalau belum pernah konflik serius, pilih yang paling mendekati.",
+          options:["Dibahas tuntas sampai keduanya lega","Salah satu mengalah — tapi masalahnya tidak benar-benar selesai","Berhenti karena sama-sama capek, bukan karena selesai","Lanjut seolah tidak terjadi apa-apa","\"Baikan\" karena waktu berlalu, bukan karena diselesaikan"] },
+        { id:"Q7", section:"SAAT ADA YANG TIDAK BERES", type:"single",
+          question:"Kalau lagi marah atau kecewa dengan pasangan, biasanya kamu:",
+          options:["Tetap bisa bicara meskipun emosi","Butuh jeda dulu sebelum bisa bicara dengan jernih","Diam atau menghindar — butuh jarak dulu","Kata-kata keluar lebih keras dari yang diinginkan"] },
+        { id:"Q8", section:"SAAT ADA YANG TIDAK BERES", type:"single",
+          question:"Kalau hubungan mulai terasa tidak nyaman, biasanya kamu lebih sering jadi orang yang:",
+          options:["Berusaha bikin suasana balik normal","Diam dulu sampai lebih tenang","Fokus supaya masalahnya nggak makin besar","Menahan banyak hal sendiri","Kepikiran karena masalahnya terasa muter di situ-situ aja"] },
+        { id:"Q9", section:"SAAT ADA YANG TIDAK BERES", type:"single",
+          question:"Kalau ada kebiasaan pasanganmu yang sebenarnya mengganggu tapi belum kamu omongin, biasanya kamu:",
+          options:["Akhirnya aku bilang langsung","Tunggu momen yang tepat, baru bilang","Tidak bilang — menyesuaikan diri saja","Tidak bilang — dan pelan-pelan ada jarak yang terasa","Bilang secara tidak langsung, berharap dia nangkap sendiri"] },
+        { id:"Q_OPEN", section:"JEDA SEBENTAR", type:"text",
+          question:"Sebelum kita lanjut — Pernah nggak ada hal dalam hubunganmu yang sebenarnya kepikiran buat dibahas, tapi sampai sekarang belum jadi kamu omongin?",
+          subtext:"Tidak perlu panjang. Satu kalimat sudah cukup. Jawaban spontan biasanya paling jujur." },
+        { id:"Q10", section:"PERNIKAHAN DALAM BAYANGANMU", type:"single",
+          question:"Kalau membayangkan pulang ke rumah setelah menikah, yang paling kebayang buat kamu adalah:",
+          options:["Ngobrol soal hari masing-masing sambil makan atau santai","Ada di tempat yang sama tapi masing-masing butuh waktu sendiri dulu","Salah satu sudah menyiapkan sesuatu untuk yang lain","Tidak ada gambaran yang fixed — tergantung kondisi saat itu","Jujur, belum pernah membayangkan"] },
+        { id:"Q11", section:"PERNIKAHAN DALAM BAYANGANMU", type:"single",
+          question:"Soal urusan rumah tangga sehari-hari setelah menikah — masak, beres-beres, bayar tagihan, dll — ekspektasimu paling mendekati yang mana?",
+          options:["Dibicarakan dan disepakati dulu — siapa handle apa","Dibagi rata sebisa mungkin","Siapa yang lebih sempat atau lebih bisa, dia yang ambil","Ada hal-hal yang secara natural lebih cocok dilakukan salah satu — dan itu wajar","Belum kepikiran sampai sejauh itu"] },
+        { id:"Q12", section:"PERNIKAHAN DALAM BAYANGANMU", type:"single",
+          question:"Dari semua ini, mana yang PALING tidak bisa kamu kompromikan dalam pernikahan?",
+          subtext:"Pilih SATU yang paling jujur.",
+          options:["Bisa ngobrol dalam tentang apa saja dengan pasangan","Rasa aman — tidak takut dihakimi atau ditinggalkan","Saling mendukung tujuan dan ambisi masing-masing","Kehidupan seksual yang sehat dan terhubung","Jujur soal finansial — tidak ada yang disembunyikan","Satu nilai atau cara hidup yang sama","Kebebasan untuk tetap jadi diri sendiri"] },
+        { id:"Q14", section:"REALITA SAAT INI", type:"single",
+          question:"Kondisi finansialmu sekarang, yang paling jujur:",
+          options:["Cukup stabil, tidak ada tekanan yang signifikan","Ada cicilan atau tanggungan, tapi masih terkendali","Ada tekanan yang sedang aku handle","Ada hal finansial yang belum aku ceritakan ke pasangan atau calon pasanganku","Belum stabil dan belum tertata"] },
+        { id:"Q15", section:"REALITA SAAT INI", type:"single",
+          question:"Kamu pernah nggak merasa perlu terlihat lebih mapan dari kondisi sebenarnya?",
+          options:["Hampir tidak pernah, aku cukup terbuka soal kondisiku","Sesekali, supaya momennya tidak terganggu","Cukup sering, tidak nyaman kalau dia tahu kondisi aslinya","Sering dan ini sesuatu yang aku tahu perlu aku bereskan"] },
+        { id:"Q16", section:"REALITA SAAT INI", type:"single",
+          question:"Kalau nanti sudah menikah, seberapa besar kemungkinan kamu masih punya tanggung jawab finansial rutin ke keluarga?",
+          options:["Sangat kecil — orang tuaku mandiri secara finansial","Mungkin ada — dan aku sudah mulai memikirkan ini","Cukup besar — ini perlu dibicarakan sebelum menikah","Sangat besar — dan calon pasanganku perlu tahu ini"] },
+        { id:"Q17", section:"REALITA SAAT INI", type:"single",
+          question:"Kalau ada keputusan besar dan pendapat orang tua serta pasangan berbeda, kamu akan memprioritaskan:",
+          options:["Pasanganku, dia keluarga intiku","Tergantung, tidak ada pola yang tetap","Orang tuaku, aku sangat menghormati pendapat mereka","Biasanya aku coba dengarkan keduanya dulu sebelum decide"] },
+        { id:"Q18", section:"REALITA SAAT INI", type:"single",
+          question:"Kalau keluarga besar mulai punya pendapat kuat soal urusan rumah tangga nanti, kamu akan:",
+          options:["Bicara langsung ke mereka soal batasan","Bicara ke pasangan dulu, baru atur bersama","Ikuti dulu — sulit menolak mereka","Belum tahu — tergantung situasinya"] },
+        { id:"Q19", section:"YANG BELUM PERNAH KAMU PIKIRKAN", type:"single",
+          question:"Dari semua hal tentang pernikahan, yang paling kamu takutkan:",
+          options:["Pasangan tidak setia","Kehilangan bagian dari dirimu yang penting","Terjebak dalam pernikahan yang tidak bahagia","Mengecewakan pasangan — tidak cukup baik","Jarak yang tumbuh pelan-pelan sampai kami jadi asing","Konflik yang tidak pernah benar-benar selesai"] },
+        { id:"Q20", section:"YANG BELUM PERNAH KAMU PIKIRKAN", type:"single",
+          question:"Sebelum menikah nanti, hal apa yang paling kamu harap benar-benar dipahami pasanganmu tentang dirimu?",
+          options:["Cara aku menghadapi konflik atau tekanan — aku tidak selalu bisa tenang","Kebutuhanku untuk punya waktu dan ruang sendiri","Kondisi finansial atau tanggungan yang aku punya","Seberapa dekat keluargaku dan seberapa terlibat mereka","Sesuatu dari masa laluku yang mungkin masih berpengaruh","Mimpi atau tujuan yang aku pegang erat — yang mungkin perlu kita pikirkan bersama"] },
+        { id:"Q21", section:"YANG BELUM PERNAH KAMU PIKIRKAN", type:"single",
+          question:"Pernah nggak kamu merasa ada bagian dari dirimu yang belum benar-benar diketahui pasanganmu, padahal mungkin penting untuk hubungan ke depan?",
+          subtext:"Hampir semua orang punya ini.",
+          options:["Tidak ada, aku cukup terbuka","Mungkin ada, tapi rasanya tidak terlalu signifikan","Ada, dan aku berencana menceritakannya sebelum menikah","Ada, tapi belum tahu bagaimana atau kapan harus memulainya","Ada, dan jujur aku tidak yakin akan pernah menceritakannya"] },
+        { id:"Q22", section:"YANG BELUM PERNAH KAMU PIKIRKAN", type:"multi", max:3,
+          question:"Kalau dipikir-pikir, topik mana yang sebenarnya paling jarang benar-benar dibicarakan?",
+          subtext:"Pilih maksimal 3.",
+          options:["Kondisi finansial masing-masing yang sebenarnya","Ekspektasi soal siapa handle apa di rumah","Cara masing-masing kalau lagi konflik","Soal anak — kapan, berapa, mendidik bagaimana","Keluarga besar dan seberapa jauh mereka terlibat","Ekspektasi soal kehidupan intim bersama","Ketakutan terdalam tentang pernikahan","Sesuatu dari masa lalu yang mungkin masih berpengaruh"] }
+    ],
+    en: [
+        { id:"Q1", section:"HOW YOU ARE IN CLOSE RELATIONSHIPS", type:"single",
+          question:"When something heavy is on your mind — work, family, or something that disappointed you — you usually:",
+          options:["Talk to the person closest to you right away","Wait until it settles a bit, then share","Handle it yourself most of the time — rarely feel the need to tell anyone","Feel more comfortable talking to a friend than your closest person","Don't know who to talk to"] },
+        { id:"Q2", section:"HOW YOU ARE IN CLOSE RELATIONSHIPS", type:"single",
+          question:"When you're uncomfortable or getting tired in a social situation, you usually:",
+          options:["Tell the person closest to you directly that you need a moment","Hold on until it's over — don't want to be a burden","Send subtle signals, hoping they'll pick up on it","Become quieter or distant without realizing it","Find an excuse to step out — bathroom, phone call, anything"] },
+        { id:"Q3", section:"HOW YOU ARE IN CLOSE RELATIONSHIPS", type:"single",
+          question:"When you're emotionally drained, you're most comfortable if the person closest to you:",
+          options:["Listens — doesn't jump straight to solutions","Helps you find a way out","Stays quietly nearby without needing to say much","Gives you space before you're ready to talk","You don't know yet what you need"] },
+        { id:"Q4", section:"HOW YOU ARE IN CLOSE RELATIONSHIPS", type:"single",
+          question:"If someone close to you seems to have a problem but hasn't said anything, you usually:",
+          options:["Ask directly — you can't pretend not to notice","Wait until they open up on their own","Invite them for food or a walk to ease the mood","Often don't notice right away — only find out when they say something"] },
+        { id:"Q5", section:"WHEN SOMETHING FEELS OFF", type:"single",
+          question:"If something in the relationship has been bothering you, you usually:",
+          options:["Say it right away","Choose what needs to be addressed and what doesn't","Wait for the right timing","Let it pass so it doesn't escalate","Keep it to yourself — indefinitely"] },
+        { id:"Q6", section:"WHEN SOMETHING FEELS OFF", type:"single",
+          question:"When there's conflict or misunderstanding with your partner, it usually ends with:",
+          subtext:"If you've never had a serious conflict, pick the closest option.",
+          options:["A thorough discussion until both feel at peace","One person gives in — but the issue isn't truly resolved","Stopping because both are tired, not because it's resolved","Continuing as if nothing happened","'Making up' because time passed, not because it was resolved"] },
+        { id:"Q7", section:"WHEN SOMETHING FEELS OFF", type:"single",
+          question:"When you're angry or disappointed with your partner, you usually:",
+          options:["Can still talk even when emotional","Need a pause before you can speak clearly","Go quiet or pull away — need distance first","Words come out harsher than intended"] },
+        { id:"Q8", section:"WHEN SOMETHING FEELS OFF", type:"single",
+          question:"When the relationship starts feeling uncomfortable, you're usually the one who:",
+          options:["Tries to bring the mood back to normal","Goes quiet until calmer","Focuses on keeping the problem from getting bigger","Holds a lot in alone","Keeps thinking about it because it feels like going in circles"] },
+        { id:"Q9", section:"WHEN SOMETHING FEELS OFF", type:"single",
+          question:"If there's a habit of your partner's that actually bothers you but you haven't said anything, you usually:",
+          options:["Eventually say it directly","Wait for the right moment, then say it","Don't say it — just adapt","Don't say it — and slowly feel a distance forming","Say it indirectly, hoping they catch on"] },
+        { id:"Q_OPEN", section:"PAUSE FOR A MOMENT", type:"text",
+          question:"Before we continue — Has there ever been something in your relationship that you've been meaning to talk about, but still haven't?",
+          subtext:"Doesn't need to be long. One sentence is enough. Spontaneous answers are usually the most honest." },
+        { id:"Q10", section:"YOUR VISION OF MARRIAGE", type:"single",
+          question:"When you imagine coming home after getting married, what you picture most is:",
+          options:["Talking about each other's day over food or relaxing together","Being in the same space but each needing alone time first","One of you already has something prepared for the other","No fixed image — depends on the situation","Honestly, I've never really pictured it"] },
+        { id:"Q11", section:"YOUR VISION OF MARRIAGE", type:"single",
+          question:"When it comes to daily household responsibilities after marriage — cooking, cleaning, bills, etc. — your expectation is closest to:",
+          options:["Discussed and agreed upon first — who handles what","Split as evenly as possible","Whoever has more time or skill takes it","Some things naturally suit one person more — and that's fine","Haven't thought that far ahead"] },
+        { id:"Q12", section:"YOUR VISION OF MARRIAGE", type:"single",
+          question:"Of all these, what is the ONE thing you absolutely cannot compromise on in marriage?",
+          subtext:"Choose the ONE most honest answer.",
+          options:["Being able to talk deeply about anything with my partner","Safety — not fearing judgment or abandonment","Mutually supporting each other's goals and ambitions","A healthy and connected intimate life","Financial honesty — nothing hidden","Sharing one core value or way of life","The freedom to remain myself"] },
+        { id:"Q14", section:"YOUR CURRENT REALITY", type:"single",
+          question:"Your financial situation right now, honestly:",
+          options:["Fairly stable, no significant pressure","Have loans or obligations, but manageable","There's pressure I'm currently handling","There's something financial I haven't told my partner or prospective partner","Not stable and not yet organized"] },
+        { id:"Q15", section:"YOUR CURRENT REALITY", type:"single",
+          question:"Have you ever felt the need to appear more financially secure than you actually are?",
+          options:["Almost never — I'm fairly open about my situation","Occasionally, so the moment isn't disrupted","Fairly often — uncomfortable if they knew the real situation","Often — and I know this is something I need to address"] },
+        { id:"Q16", section:"YOUR CURRENT REALITY", type:"single",
+          question:"After getting married, how likely is it that you'll still have regular financial responsibilities to your family?",
+          options:["Very unlikely — my parents are financially independent","Possibly — and I've started thinking about this","Fairly likely — this needs to be talked about before marriage","Very likely — and my future partner needs to know this"] },
+        { id:"Q17", section:"YOUR CURRENT REALITY", type:"single",
+          question:"If there's a big decision and your parents' and partner's opinions differ, you would prioritize:",
+          options:["My partner — they're my core family","Depends — no fixed pattern","My parents — I deeply respect their opinion","Usually I try to listen to both before deciding"] },
+        { id:"Q18", section:"YOUR CURRENT REALITY", type:"single",
+          question:"If extended family starts having strong opinions about your household matters, you would:",
+          options:["Talk to them directly about boundaries","Talk to my partner first, then figure it out together","Go along with it — hard to refuse them","Don't know yet — depends on the situation"] },
+        { id:"Q19", section:"WHAT YOU'VE NEVER THOUGHT ABOUT", type:"single",
+          question:"Of everything about marriage, what you fear most is:",
+          options:["A partner who's unfaithful","Losing an important part of yourself","Being trapped in an unhappy marriage","Disappointing your partner — not being good enough","Distance that grows slowly until you become strangers","Conflict that never truly gets resolved"] },
+        { id:"Q20", section:"WHAT YOU'VE NEVER THOUGHT ABOUT", type:"single",
+          question:"Before marriage, what do you most hope your partner truly understands about you?",
+          options:["How I handle conflict or pressure — I can't always stay calm","My need for personal time and space","My financial situation or obligations","How close my family is and how involved they are","Something from my past that might still affect me","Dreams or goals I hold close — that we might need to think about together"] },
+        { id:"Q21", section:"WHAT YOU'VE NEVER THOUGHT ABOUT", type:"single",
+          question:"Have you ever felt there's a part of you your partner doesn't truly know, yet might be important for the future of the relationship?",
+          subtext:"Almost everyone has this.",
+          options:["No, I'm fairly open","Maybe, but it doesn't feel that significant","Yes, and I plan to share it before getting married","Yes, but I don't yet know how or when to start","Yes, and honestly I'm not sure I ever will"] },
+        { id:"Q22", section:"WHAT YOU'VE NEVER THOUGHT ABOUT", type:"multi", max:3,
+          question:"Thinking about it, which topics have actually been talked about the least?",
+          subtext:"Choose up to 3.",
+          options:["Each other's actual financial situation","Expectations about who handles what at home","How each person handles conflict","Children — when, how many, how to raise them","Extended family and how involved they should be","Expectations about intimate life together","Deepest fears about marriage","Something from the past that might still have an impact"] }
+    ]
+};
+
+/* ====================================================
+   4. DETECTION ENGINE V6
+==================================================== */
+const PRIORITY = ["P09","P11","P12","P04","P06","P08","P10","P03","P01","P05","P07","P13","P02"];
+
+function runDetectionEngine(ansLetters) {
+    let eligible = [];
+    let partialScores = [];
+
+    for (let pid of Object.keys(PATTERNS_CONF)) {
+        let conds = PATTERNS_CONF[pid].conds;
+        let metCount = 0;
+
+        for (let cond of conds) {
+            let qId = cond[0];
+            let accepted = cond[1];
+            let userAns = ansLetters[qId];
+
+            if (qId === "Q22" && accepted.includes("multi")) {
+                if (Array.isArray(userAns) && userAns.length > 0) metCount++;
+            } else if (userAns && accepted.includes(userAns)) {
+                metCount++;
+            }
+        }
+
+        if (metCount === conds.length) eligible.push(pid);
+        partialScores.push({ id: pid, score: metCount / conds.length, met: metCount });
+    }
+
+    if (eligible.length > 0) {
+        eligible.sort((a, b) => {
+            let lenDiff = PATTERNS_CONF[b].conds.length - PATTERNS_CONF[a].conds.length;
+            if (lenDiff !== 0) return lenDiff;
+            return PRIORITY.indexOf(a) - PRIORITY.indexOf(b);
+        });
+        return eligible[0];
+    }
+
+    partialScores.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return PRIORITY.indexOf(a.id) - PRIORITY.indexOf(b.id);
+    });
+    return partialScores[0].id;
+}
+
+/* ====================================================
+   5. STATE & UI
+==================================================== */
+let currentLang = 'id';
+let questions = QUESTIONS.id;
+let currentIndex = 0;
+let userAnswers = {};
+let selectedMulti = [];
+let userData = { name: "", wa: "", email: "" };
+
+// Google Apps Script URL — Ganti dengan URL Anda
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyPXcevWrkCRfTdPy6CUYwS1vEueB2X5gEomGvzWkdGf6L9lLuXVAj5sCwB51A-ylD-6w/exec';
+
+/* --- Language --- */
+function setLang(lang) {
+    currentLang = lang;
+    questions = QUESTIONS[lang];
+
+    document.getElementById('btn-id').classList.toggle('active', lang === 'id');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+    const L = LANG_PACK[lang];
+    document.getElementById('intro-label').textContent = L.introLabel;
+    document.getElementById('intro-title').textContent = L.introTitle;
+    document.getElementById('intro-desc').textContent = L.introDesc;
+    document.getElementById('intro-quote').textContent = L.introQuote;
+    document.getElementById('intro-btn').textContent = L.introBtn;
+    document.getElementById('back-label').textContent = L.backLabel;
+    document.getElementById('form-title').textContent = L.formTitle;
+    document.getElementById('form-desc').textContent = L.formDesc;
+    document.getElementById('label-name').textContent = L.labelName;
+    document.getElementById('label-wa').textContent = L.labelWa;
+    document.getElementById('label-email').textContent = L.labelEmail;
+    document.getElementById('user-name').placeholder = L.namePlaceholder;
+    document.getElementById('user-wa').placeholder = L.waPlaceholder;
+    document.getElementById('user-email').placeholder = L.emailPlaceholder;
+    document.getElementById('form-btn').textContent = L.formBtn;
+}
+
+/* --- Screens --- */
+function showScreen(id) {
+    ['intro-screen','form-screen','quiz-screen','result-screen'].forEach(s => {
+        document.getElementById(s).classList.add('hidden');
+    });
+    const el = document.getElementById(id);
+    el.classList.remove('hidden');
+    el.classList.remove('fade-in');
+    void el.offsetWidth; // reflow
+    el.classList.add('fade-in');
+}
+
+/* --- Form validation --- */
+function startQuiz() {
+    const L = LANG_PACK[currentLang];
+    const name  = document.getElementById('user-name').value.trim();
+    const wa    = document.getElementById('user-wa').value.trim();
+    const email = document.getElementById('user-email').value.trim();
+
+    if (!name || !wa || !email) { alert(L.validationAll); return; }
+    if (!/^[0-9]+$/.test(wa)) { alert(L.validationWa); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[cC][oO][mM]$/.test(email)) { alert(L.validationEmail); return; }
+
+    userData = { name, wa, email };
+    currentIndex = 0;
+    userAnswers = {};
+    selectedMulti = [];
+
+    showScreen('quiz-screen');
+    renderQuestion();
+}
+
+/* --- Quiz rendering --- */
+function renderQuestion() {
+    const L  = LANG_PACK[currentLang];
+    const q  = questions[currentIndex];
+    const total = questions.length;
+
+    // Progress
+    const pct = Math.round((currentIndex / total) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-count').textContent = (currentIndex + 1) + ' / ' + total;
+    document.getElementById('progress-label').textContent = L.progressLabel;
+
+    document.getElementById('q-section').textContent = q.section;
+    document.getElementById('q-text').textContent = q.question;
+
+    const sub = document.getElementById('q-subtext');
+    if (q.subtext) { sub.textContent = q.subtext; sub.style.display = 'block'; }
+    else { sub.style.display = 'none'; }
+
+    document.getElementById('back-btn').classList.toggle('hidden', currentIndex === 0);
+
+    const container = document.getElementById('options-container');
+    const nextBtn   = document.getElementById('next-btn');
+    container.innerHTML = '';
+    selectedMulti = Array.isArray(userAnswers[q.id]) ? [...userAnswers[q.id]] : [];
+
+    if (q.type === 'single') {
+        nextBtn.classList.add('hidden');
+        q.options.forEach((opt) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            if (userAnswers[q.id] === opt) btn.classList.add('selected');
+            btn.textContent = opt;
+            btn.onclick = () => {
+                userAnswers[q.id] = opt;
+                container.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                setTimeout(nextQuestion, 280);
+            };
+            container.appendChild(btn);
+        });
+
+    } else if (q.type === 'multi') {
+        nextBtn.classList.remove('hidden');
+        updateMultiBtn(q);
+        q.options.forEach((opt) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            if (selectedMulti.includes(opt)) btn.classList.add('selected');
+            btn.innerHTML = `<div class="check-box"></div><span>${opt}</span>`;
+            btn.onclick = () => {
+                if (selectedMulti.includes(opt)) {
+                    selectedMulti = selectedMulti.filter(i => i !== opt);
+                    btn.classList.remove('selected');
+                } else if (selectedMulti.length < q.max) {
+                    selectedMulti.push(opt);
+                    btn.classList.add('selected');
+                }
+                userAnswers[q.id] = [...selectedMulti];
+                updateMultiBtn(q);
+            };
+            container.appendChild(btn);
+        });
+
+    } else if (q.type === 'text') {
+        nextBtn.classList.remove('hidden');
+        nextBtn.disabled = false;
+        nextBtn.textContent = currentIndex === questions.length - 1 ? L.doneBtn : L.nextBtn;
+        const ta = document.createElement('textarea');
+        ta.className = 'open-q';
+        ta.maxLength = 300;
+        ta.placeholder = L.textPlaceholder;
+        if (userAnswers[q.id]) ta.value = userAnswers[q.id];
+        ta.oninput = (e) => { userAnswers[q.id] = e.target.value; };
+        container.appendChild(ta);
+    }
+}
+
+function updateMultiBtn(q) {
+    const L  = LANG_PACK[currentLang];
+    const btn = document.getElementById('next-btn');
+    const isLast = currentIndex === questions.length - 1;
+    if (selectedMulti.length > 0) {
+        btn.textContent = isLast ? L.doneBtn : L.nextBtn;
+        btn.disabled = false;
+    } else {
+        btn.textContent = L.pickMax(q.max);
+        btn.disabled = true;
+    }
+}
+
+function nextQuestion() {
+    if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        animateAndRender();
+    } else {
+        processEngineAndSubmit();
+    }
+}
+
+function previousQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        animateAndRender();
+    }
+}
+
+function animateAndRender() {
+    const qs = document.getElementById('quiz-screen');
+    qs.style.animation = 'none';
+    void qs.offsetHeight;
+    qs.style.animation = 'fadeIn 0.3s forwards';
+    renderQuestion();
+}
+
+/* ====================================================
+   6. PROSES AKHIR & SUBMIT
+==================================================== */
+function processEngineAndSubmit() {
+    const L = LANG_PACK[currentLang];
+
+    // Konversi jawaban ke huruf
+    let ansLetters = {};
+    questions.forEach(q => {
+        if (q.type === 'single' && userAnswers[q.id]) {
+            let idx = q.options.indexOf(userAnswers[q.id]);
+            if (idx >= 0) ansLetters[q.id] = String.fromCharCode(65 + idx);
+        } else if (q.type === 'multi' && userAnswers[q.id]) {
+            ansLetters[q.id] = userAnswers[q.id].map(opt => String.fromCharCode(65 + q.options.indexOf(opt)));
+        }
+    });
+
+    const finalPatternID = runDetectionEngine(ansLetters);
+    const patternData    = PATTERNS_CONF[finalPatternID];
+
+    // Tampilkan layar loading
+    showScreen('result-screen');
+    document.getElementById('result-title').textContent = L.savingMsg;
+    document.getElementById('result-desc').textContent  = '';
+    document.getElementById('result-insight').textContent = L.savingDesc;
+    document.getElementById('result-pattern-badge').textContent = finalPatternID;
+    document.getElementById('paywall-box').style.display = 'none';
+
+    // Kirim data ke Google Sheets
+    const formData = new FormData();
+    formData.append('nama',  userData.name);
+    formData.append('wa',    userData.wa);
+    formData.append('email', userData.email);
+    formData.append('pola',  finalPatternID);
+    formData.append('bahasa', currentLang.toUpperCase());
+    formData.append('q_open', userAnswers["Q_OPEN"] || "-");
+    formData.append('jawaban_lengkap', JSON.stringify(ansLetters));
+
+    function showResult(overviewText) {
+        document.getElementById('result-title').textContent    = patternData.title[currentLang];
+        document.getElementById('result-desc').textContent     = patternData.desc[currentLang];
+        document.getElementById('result-insight').textContent  = patternData.insight[currentLang];
+        document.getElementById('result-section-label').textContent = L.resultSectionLabel;
+
+        // Paywall
+        document.getElementById('paywall-title').textContent = L.paywallTitle;
+        document.getElementById('paywall-desc').textContent  = L.paywallDesc;
+        const ul = document.getElementById('paywall-list');
+        ul.innerHTML = '';
+        L.paywallItems.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = item;
+            ul.appendChild(li);
+        });
+        document.getElementById('lynk-btn').textContent = L.paywallBtn;
+        document.getElementById('lynk-btn').href        = patternData.link;
+        document.getElementById('paywall-box').style.display = 'block';
+    }
+
+    fetch(SCRIPT_URL, { method: 'POST', body: formData })
+        .then(() => showResult(L.overviewOk))
+        .catch(() => showResult(L.overviewFail));
+}
+</script>
+
+</body>
+</html>
