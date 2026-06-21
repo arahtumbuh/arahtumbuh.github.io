@@ -65,7 +65,7 @@
             margin-bottom: 32px;
         }
         .brand-logo img {
-            height: 40px;
+            height: 72px;
             width: auto;
         }
 
@@ -400,10 +400,10 @@
         <span class="section-label" id="intro-label">Asesmen Musim 1: Mendekat</span>
         <h1 id="intro-title">Sebelum Iya.</h1>
 
-        <p id="intro-desc">Tidak ada jawaban yang benar. Yang paling berguna adalah yang paling jujur. Ini adalah alat untuk memetakan apa yang mungkin ikut masuk ke pernikahan — kalau tidak pernah benar-benar disadari atau dibicarakan.</p>
+        <div id="intro-desc" style="font-size: 15px; margin-bottom: 24px; color: var(--charcoal); line-height: 1.6; text-align: left;"></div>
 
         <div class="manifesto-quote" id="intro-quote">
-            "Bukan menjadi satu. Tetap dua. Dua orang utuh yang memilih arah yang sama, berulang kali."
+            "Menjalin hubungan bukan berarti harus melebur jadi satu. Kalian tetap dua orang yang berbeda, yang berusaha menjaga agar tujuannya tetap sama"
         </div>
 
         <button class="btn btn-primary" id="intro-btn" onclick="showScreen('form-screen')">Mulai Memetakan</button>
@@ -470,7 +470,16 @@
         <p class="result-desc-pill" id="result-desc"></p>
         <p class="result-insight" id="result-insight"></p>
 
-        <hr class="divider">
+        <!-- Elemen Teks Blur (Teaser) -->
+        <div style="position: relative; margin-top: 16px; margin-bottom: 0;">
+            <p id="result-blurred" style="font-size: 16px; line-height: 1.75; color: var(--charcoal); filter: blur(5px); opacity: 0.5; user-select: none; pointer-events: none; margin-bottom: 0;">
+                Memuat teks lanjutan...
+            </p>
+            <!-- Gradasi putih untuk efek memudar -->
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent 10%, #FFFFFF 100%);"></div>
+        </div>
+
+        <hr class="divider" style="margin-top: 12px;">
 
         <div class="paywall-box" id="paywall-box">
             <h3 id="paywall-title" style="font-family: 'League Spartan', sans-serif; color: var(--deep-forest); margin-bottom: 8px;">Buka Peta Dinamika Lengkap</h3>
@@ -493,9 +502,14 @@
 const LANG_PACK = {
     id: {
         introLabel: "Asesmen Musim 1: Mendekat",
-        introTitle: "Sebelum Iya.",
-        introDesc: "Tidak ada jawaban yang benar. Yang paling berguna adalah yang paling jujur. Ini adalah alat untuk memetakan apa yang mungkin ikut masuk ke pernikahan — kalau tidak pernah benar-benar disadari atau dibicarakan.",
-        introQuote: '"Bukan menjadi satu. Tetap dua. Dua orang utuh yang memilih arah yang sama, berulang kali."',
+        introTitle: "Sebelum Iya",
+        introDesc: `Menikah sebaiknya tidak dibangun di atas asumsi. Asesmen ini hadir membantu kalian menggali lebih dalam melalui langkah-langkah ini:
+        <ul style="margin-top: 12px; padding-left: 20px;">
+            <li style="margin-bottom: 8px;"><strong>Membongkar yang tak terucap:</strong> Membicarakan hal penting yang mungkin belum terucap selama ini.</li>
+            <li style="margin-bottom: 8px;"><strong>Memetakan hidup bersama:</strong> Memandu kalian memetakan kebiasaan, harapan, dan nilai hidup.</li>
+            <li><strong>Melangkah dengan mata terbuka:</strong> Memastikan saat kalian melangkah, keputusan itu bukan dari asumsi, tapi karena tahu kalian menuju arah yang sama.</li>
+        </ul>`,
+        introQuote: '"Menjalin hubungan bukan berarti harus melebur jadi satu. Kalian tetap dua orang berbeda yang berusaha menjaga agar tujuannya tetap sama."',
         introBtn: "Mulai Memetakan",
         backLabel: "Kembali",
         formTitle: "Ke mana hasil pemetaan ini akan dikirim?",
@@ -528,13 +542,19 @@ const LANG_PACK = {
             "<strong>Blind Spot:</strong> Konsekuensi yang mengintai jika pola ini dibiarkan.",
             "<strong>Framework Percakapan:</strong> Panduan konkret untuk membahas ini bersama pasangan."
         ],
-        paywallBtn: "Buka Hasil Lengkap — Rp 34.900"
+        blurredText: "Namun, ada pola tersembunyi yang perlu diwaspadai jika dinamika ini dibiarkan terlalu lama. Pola ini diam-diam bisa memicu kebuntuan komunikasi di titik krusial, di mana satu pihak merasa diabaikan sementara pihak lain merasa terus dituntut. Untuk mencegahnya, ada langkah spesifik yang perlu...",
+        paywallBtn: "Buka Hasil Lengkap — Rp 19.900"
     },
     en: {
         introLabel: "Assessment Season 1: Drawing Near",
-        introTitle: "Before Yes.",
-        introDesc: "There are no right answers. The most useful ones are the most honest. This is a tool to map what might follow you into marriage — if it's never truly been acknowledged or talked about.",
-        introQuote: '"Not becoming one. Remaining two. Two whole people choosing the same direction, repeatedly."',
+        introTitle: "Sebelum Iya",
+        introDesc: `A marriage shouldn't be built on assumptions. This assessment helps you uncover the unspoken things through these steps:
+        <ul style="margin-top: 12px; padding-left: 20px;">
+            <li style="margin-bottom: 8px;"><strong>Uncover the unspoken:</strong> Discuss important expectations that are often missed.</li>
+            <li style="margin-bottom: 8px;"><strong>Map out life together:</strong> Map out habits, hopes, and core values.</li>
+            <li><strong>Step forward with open eyes:</strong> Ensure your decision isn't based on assumptions, but on knowing you're walking the exact same path.</li>
+        </ul>`,
+        introQuote: '"Being in a relationship isn\'t about merging into one. It’s about two distinct individuals making sure they are still heading in the same direction."',
         introBtn: "Start Mapping",
         backLabel: "Back",
         formTitle: "Where should we send your results?",
@@ -567,7 +587,8 @@ const LANG_PACK = {
             "<strong>Blind Spot:</strong> Consequences lurking if this pattern is left unaddressed.",
             "<strong>Conversation Framework:</strong> Concrete guide for discussing this with your partner."
         ],
-        paywallBtn: "Open Full Results — Rp 49,000"
+        blurredText: "However, there is a hidden pattern to watch out for if this dynamic is left unaddressed. It can silently trigger communication deadlocks at crucial moments, where one side feels ignored while the other feels constantly pressured. To prevent this, there is a specific step you need to...",
+        paywallBtn: "Open Full Results (PDF) — Rp 19,900"
     }
 };
 
@@ -712,148 +733,230 @@ const PATTERNS_CONF = {
 ==================================================== */
 const QUESTIONS = {
     id: [
-        { id:"Q1", section:"CARA KAMU DI HUBUNGAN DEKAT", type:"single",
-          question:"Kalau lagi ada sesuatu yang berat di kepala — entah kerjaan, keluarga, atau sesuatu yang mengecewakan — kamu biasanya:",
-          options:["Langsung cerita ke orang yang paling dekat","Tunggu agak reda dulu, baru cerita","Lebih sering selesaikan sendiri — jarang merasa perlu cerita","Lebih nyaman cerita ke teman daripada ke orang terdekat","Bingung mau cerita ke siapa"] },
-        { id:"Q2", section:"CARA KAMU DI HUBUNGAN DEKAT", type:"single",
-          question:"Kalau kamu lagi nggak nyaman atau mulai capek dalam suatu situasi sosial, biasanya kamu:",
-          options:["Bilang langsung ke orang terdekat bahwa kamu butuh keluar sebentar","Tahan sampai selesai, tidak mau merepotkan","Kasih sinyal halus, berharap dia nangkap sendiri","Jadi lebih diam atau jutek tanpa sadar","Cari alasan keluar — toilet, telepon, atau apapun"] },
-        { id:"Q3", section:"CARA KAMU DI HUBUNGAN DEKAT", type:"single",
-          question:"Saat kamu lagi capek secara emosi, biasanya kamu paling nyaman kalau orang terdekatmu:",
-          options:["Didengarkan — bukan langsung dikasih solusi","Dibantu cari jalan keluar","Ditemani diam-diam, tidak perlu banyak kata","Dikasih ruang dulu sebelum kamu siap cerita","Belum tahu apa yang kamu butuhkan"] },
-        { id:"Q4", section:"CARA KAMU DI HUBUNGAN DEKAT", type:"single",
-          question:"Kalau orang terdekatmu terlihat sedang ada masalah tapi belum cerita, biasanya kamu:",
-          options:["Tanya langsung karena tidak bisa pura-pura tidak lihat","Tunggu sampai dia sendiri yang buka","Ajak makan atau jalan dulu supaya suasana cair","Seringnya tidak langsung sadar — baru tahu kalau dia bilang"] },
-        { id:"Q5", section:"SAAT ADA YANG TIDAK BERES", type:"single",
+        // ================= PROFIL =================
+        { id:"P1", section:"PROFIL", type:"single",
+          question:"Kamu:",
+          options:["Laki-laki","Perempuan"] },
+        { id:"P2", section:"PROFIL", type:"single",
+          question:"Status hubunganmu sekarang:",
+          options:[
+              "Single, belum ada yang serius",
+              "Ada seseorang, belum resmi, tapi aku serius memikirkannya",
+              "Pacaran atau dalam hubungan serius",
+              "Sudah bertunangan atau ada rencana menikah"
+          ],
+          gating: { trigger: "Single, belum ada yang serius", message: "Asesmen ini dirancang untuk kamu yang sudah ada seseorang yang serius dalam hidupmu.\n\nKalau sekarang belum, tidak apa-apa, waktunya belum tentu sekarang. Arah Tumbuh punya konten lain yang mungkin lebih pas buat kamu di tahap ini." } },
+        { id:"P3", section:"PROFIL", type:"single",
+          question:"Tahu tentang ini dari mana?",
+          options:["TikTok","Instagram","X / Twitter","Dari teman atau kenalan","Dari pasangan atau orang dekat"] },
+        { id:"P4", section:"PROFIL", type:"single",
+          question:"Kenapa akhirnya mau isi ini?",
+          options:["Penasaran tentang diri sendiri","Ada hal yang belum aku pikirkan serius","Mau lebih siap sebelum menikah","Disarankan pasangan atau orang dekat","Ada yang mengganjal tapi belum tahu tepatnya apa"] },
+
+        // ================= BAGIAN 1 =================
+        { id:"Q1", section:"BAGIAN 1 — Cara Kamu di Hubungan Dekat", type:"single",
+          question:"Kalau lagi ada sesuatu yang berat di kepala, entah kerjaan, keluarga, atau sesuatu yang mengecewakan, kamu biasanya:",
+          options:["Langsung cerita ke pasangan","Tunggu agak reda dulu, baru cerita","Lebih sering selesaikan sendiri, jarang merasa perlu cerita","Lebih nyaman cerita ke teman daripada ke pasangan","Bingung mau cerita ke siapa"] },
+        { id:"Q2", section:"BAGIAN 1 — Cara Kamu di Hubungan Dekat", type:"single",
+          question:"Kalau kamu lagi nggak nyaman atau mulai capek dalam suatu situasi, biasanya kamu:",
+          options:["Bilang langsung ke pasangan bahwa kamu butuh keluar sebentar","Tahan sampai selesai, tidak mau merepotkan","Kasih sinyal halus, berharap dia nangkap sendiri","Jadi lebih diam atau jutek tanpa sadar","Cari alasan keluar, toilet, telepon, atau apapun"] },
+        { id:"Q3", section:"BAGIAN 1 — Cara Kamu di Hubungan Dekat", type:"single",
+          question:"Saat kamu lagi capek secara emosi, kamu paling nyaman kalau pasanganmu:",
+          options:["Mendengarkan, bukan langsung kasih solusi","Membantu cari jalan keluar","Menemani diam-diam, tidak perlu banyak kata","Kasih ruang dulu sebelum kamu siap cerita","Belum tahu apa yang kamu butuhkan"] },
+        { id:"Q4", section:"BAGIAN 1 — Cara Kamu di Hubungan Dekat", type:"single",
+          question:"Kalau pasanganmu terlihat sedang ada masalah tapi belum cerita, biasanya kamu:",
+          options:["Tanya langsung karena tidak bisa pura-pura tidak lihat","Tunggu sampai dia sendiri yang buka","Ajak makan atau jalan dulu supaya suasana cair","Seringnya tidak langsung sadar, baru tahu kalau dia bilang"] },
+
+        // ================= BAGIAN 2 =================
+        { id:"Q5", section:"BAGIAN 2 — Cara Kamu Saat Ada yang Tidak Beres", type:"single",
           question:"Kalau ada sesuatu dalam hubungan yang sempat ganggu pikiranmu, biasanya kamu:",
-          options:["Langsung bilang","Pilih mana yang perlu dibahas, mana yang tidak perlu","Tunggu timing yang pas dulu","Biarkan lewat supaya tidak jadi besar","Simpan sendiri — entah sampai kapan"] },
-        { id:"Q6", section:"SAAT ADA YANG TIDAK BERES", type:"single",
+          options:["Langsung bilang","Pilih mana yang perlu dibahas, mana yang tidak","Tunggu timing yang pas dulu","Biarkan lewat supaya tidak jadi besar","Simpan sendiri, entah sampai kapan"] },
+        { id:"Q6", section:"BAGIAN 2 — Cara Kamu Saat Ada yang Tidak Beres", type:"single",
           question:"Kalau lagi ada konflik atau salah paham dengan pasanganmu, biasanya akhirnya:",
           subtext:"Kalau belum pernah konflik serius, pilih yang paling mendekati.",
-          options:["Dibahas tuntas sampai keduanya lega","Salah satu mengalah — tapi masalahnya tidak benar-benar selesai","Berhenti karena sama-sama capek, bukan karena selesai","Lanjut seolah tidak terjadi apa-apa","\"Baikan\" karena waktu berlalu, bukan karena diselesaikan"] },
-        { id:"Q7", section:"SAAT ADA YANG TIDAK BERES", type:"single",
+          options:["Dibahas tuntas sampai keduanya lega","Salah satu mengalah, tapi masalahnya tidak benar-benar selesai","Berhenti karena sama-sama capek, bukan karena selesai","Lanjut seolah tidak terjadi apa-apa","Baikan karena waktu berlalu, bukan karena diselesaikan"] },
+        { id:"Q7", section:"BAGIAN 2 — Cara Kamu Saat Ada yang Tidak Beres", type:"single",
           question:"Kalau lagi marah atau kecewa dengan pasangan, biasanya kamu:",
-          options:["Tetap bisa bicara meskipun emosi","Butuh jeda dulu sebelum bisa bicara dengan jernih","Diam atau menghindar — butuh jarak dulu","Kata-kata keluar lebih keras dari yang diinginkan"] },
-        { id:"Q8", section:"SAAT ADA YANG TIDAK BERES", type:"single",
-          question:"Kalau hubungan mulai terasa tidak nyaman, biasanya kamu lebih sering jadi orang yang:",
-          options:["Berusaha bikin suasana balik normal","Diam dulu sampai lebih tenang","Fokus supaya masalahnya nggak makin besar","Menahan banyak hal sendiri","Kepikiran karena masalahnya terasa muter di situ-situ aja"] },
-        { id:"Q9", section:"SAAT ADA YANG TIDAK BERES", type:"single",
-          question:"Kalau ada kebiasaan pasanganmu yang sebenarnya mengganggu tapi belum kamu omongin, biasanya kamu:",
-          options:["Akhirnya aku bilang langsung","Tunggu momen yang tepat, baru bilang","Tidak bilang — menyesuaikan diri saja","Tidak bilang — dan pelan-pelan ada jarak yang terasa","Bilang secara tidak langsung, berharap dia nangkap sendiri"] },
-        { id:"Q_OPEN", section:"JEDA SEBENTAR", type:"text",
-          question:"Sebelum kita lanjut — Pernah nggak ada hal dalam hubunganmu yang sebenarnya kepikiran buat dibahas, tapi sampai sekarang belum jadi kamu omongin?",
-          subtext:"Tidak perlu panjang. Satu kalimat sudah cukup. Jawaban spontan biasanya paling jujur." },
-        { id:"Q10", section:"PERNIKAHAN DALAM BAYANGANMU", type:"single",
+          options:["Tetap bisa bicara meskipun emosi","Butuh jeda dulu sebelum bisa bicara dengan jernih","Diam atau menghindar, butuh jarak dulu","Kata-kata keluar lebih keras dari yang diinginkan"] },
+        { id:"Q8", section:"BAGIAN 2 — Cara Kamu Saat Ada yang Tidak Beres", type:"single",
+          question:"Kalau hubungan mulai terasa tidak nyaman, biasanya kamu lebih sering:",
+          options:["Berusaha bikin suasana balik normal","Diam dulu sampai lebih tenang","Fokus supaya masalahnya tidak makin besar","Menahan banyak hal sendiri","Kepikiran karena masalahnya terasa muter di situ-situ aja"] },
+        { id:"Q9", section:"BAGIAN 2 — Cara Kamu Saat Ada yang Tidak Beres", type:"single",
+          question:"Kalau ada kebiasaan pasanganmu yang sebenarnya mengganggu, tapi belum kamu omongin, biasanya kamu:",
+          options:["Akhirnya bilang langsung","Tunggu momen yang tepat, baru bilang","Tidak bilang, menyesuaikan diri saja","Tidak bilang, dan pelan-pelan ada jarak yang terasa","Bilang secara tidak langsung, berharap dia nangkap sendiri"] },
+        
+        // ================= BAGIAN 3 =================
+        { id:"Q10", section:"BAGIAN 3 — Pernikahan dalam Bayanganmu", type:"single",
           question:"Kalau membayangkan pulang ke rumah setelah menikah, yang paling kebayang buat kamu adalah:",
-          options:["Ngobrol soal hari masing-masing sambil makan atau santai","Ada di tempat yang sama tapi masing-masing butuh waktu sendiri dulu","Salah satu sudah menyiapkan sesuatu untuk yang lain","Tidak ada gambaran yang fixed — tergantung kondisi saat itu","Jujur, belum pernah membayangkan"] },
-        { id:"Q11", section:"PERNIKAHAN DALAM BAYANGANMU", type:"single",
-          question:"Soal urusan rumah tangga sehari-hari setelah menikah — masak, beres-beres, bayar tagihan, dll — ekspektasimu paling mendekati yang mana?",
-          options:["Dibicarakan dan disepakati dulu — siapa handle apa","Dibagi rata sebisa mungkin","Siapa yang lebih sempat atau lebih bisa, dia yang ambil","Ada hal-hal yang secara natural lebih cocok dilakukan salah satu — dan itu wajar","Belum kepikiran sampai sejauh itu"] },
-        { id:"Q12", section:"PERNIKAHAN DALAM BAYANGANMU", type:"single",
-          question:"Dari semua ini, mana yang PALING tidak bisa kamu kompromikan dalam pernikahan?",
-          subtext:"Pilih SATU yang paling jujur.",
-          options:["Bisa ngobrol dalam tentang apa saja dengan pasangan","Rasa aman — tidak takut dihakimi atau ditinggalkan","Saling mendukung tujuan dan ambisi masing-masing","Kehidupan seksual yang sehat dan terhubung","Jujur soal finansial — tidak ada yang disembunyikan","Satu nilai atau cara hidup yang sama","Kebebasan untuk tetap jadi diri sendiri"] },
-        { id:"Q14", section:"REALITA SAAT INI", type:"single",
+          options:["Ngobrol soal hari masing-masing sambil makan atau santai","Ada di tempat yang sama tapi masing-masing butuh waktu sendiri dulu","Salah satu sudah menyiapkan sesuatu untuk yang lain","Tidak ada gambaran yang fixed, tergantung kondisi saat itu","Jujur, belum pernah membayangkan"] },
+        { id:"Q11", section:"BAGIAN 3 — Pernikahan dalam Bayanganmu", type:"single",
+          question:"Soal urusan rumah tangga sehari-hari setelah menikah seperti masak, beres-beres, bayar tagihan, ekspektasimu paling mendekati yang mana?",
+          options:["Dibicarakan dan disepakati dulu, siapa handle apa","Dibagi rata sebisa mungkin","Siapa yang lebih sempat atau lebih bisa, dia yang ambil","Ada hal-hal yang secara natural lebih cocok dilakukan salah satu, dan itu wajar","Belum kepikiran sampai sejauh itu"] },
+        { id:"Q12", section:"BAGIAN 3 — Pernikahan dalam Bayanganmu", type:"single",
+          question:"Hal mana yang kalau tidak ada, pernikahan itu terasa hampa bagimu?",
+          subtext:"Pilih satu yang paling jujur.",
+          options:["Bisa ngobrol dalam tentang apa saja dengan pasangan","Rasa aman, tidak takut dihakimi atau ditinggalkan","Saling mendukung tujuan dan ambisi masing-masing","Kehidupan seksual yang sehat","Jujur soal finansial, tidak ada yang disembunyikan","Satu nilai atau cara hidup yang sama","Kebebasan untuk tetap jadi diri sendiri"] },
+        { id:"Q13", section:"BAGIAN 3 — Pernikahan dalam Bayanganmu", type:"single",
+          question:"Kalau soal agama dalam rumah tangga nanti, kamu lebih membayangkan:",
+          subtext:"Tidak ada jawaban yang lebih baik atau lebih buruk di sini.",
+          options:["Sangat penting, ingin pasangan yang serius dalam praktiknya","Penting sebagai nilai, tapi praktik harian bisa fleksibel","Ada tapi tidak mendominasi keputusan sehari-hari","Masih dalam proses, belum bisa bilang dengan pasti"] },
+
+        // ================= BAGIAN 4 =================
+        { id:"Q14", section:"BAGIAN 4 — Realita saat ini", type:"single",
           question:"Kondisi finansialmu sekarang, yang paling jujur:",
-          options:["Cukup stabil, tidak ada tekanan yang signifikan","Ada cicilan atau tanggungan, tapi masih terkendali","Ada tekanan yang sedang aku handle","Ada hal finansial yang belum aku ceritakan ke pasangan atau calon pasanganku","Belum stabil dan belum tertata"] },
-        { id:"Q15", section:"REALITA SAAT INI", type:"single",
-          question:"Kamu pernah nggak merasa perlu terlihat lebih mapan dari kondisi sebenarnya?",
-          options:["Hampir tidak pernah, aku cukup terbuka soal kondisiku","Sesekali, supaya momennya tidak terganggu","Cukup sering, tidak nyaman kalau dia tahu kondisi aslinya","Sering dan ini sesuatu yang aku tahu perlu aku bereskan"] },
-        { id:"Q16", section:"REALITA SAAT INI", type:"single",
+          options:["Cukup stabil, tidak ada tekanan yang signifikan","Ada cicilan atau tanggungan, tapi masih terkendali","Ada tekanan yang sedang aku handle","Ada hal finansial yang belum aku ceritakan ke pasanganku","Belum stabil dan belum tertata"] },
+        { id:"Q15", section:"BAGIAN 4 — Realita saat ini", type:"single",
+          question:"Pernah nggak merasa perlu terlihat lebih mapan dari kondisi sebenarnya?",
+          options:["Hampir tidak pernah, aku cukup terbuka soal kondisiku","Sesekali, supaya momennya tidak terganggu","Cukup sering, tidak nyaman kalau dia tahu kondisi aslinya","Sering, dan ini sesuatu yang aku tahu perlu aku bereskan"] },
+        { id:"Q16", section:"BAGIAN 4 — Realita saat ini", type:"single",
           question:"Kalau nanti sudah menikah, seberapa besar kemungkinan kamu masih punya tanggung jawab finansial rutin ke keluarga?",
-          options:["Sangat kecil — orang tuaku mandiri secara finansial","Mungkin ada — dan aku sudah mulai memikirkan ini","Cukup besar — ini perlu dibicarakan sebelum menikah","Sangat besar — dan calon pasanganku perlu tahu ini"] },
-        { id:"Q17", section:"REALITA SAAT INI", type:"single",
+          options:["Sangat kecil, orang tuaku mandiri secara finansial","Mungkin ada, dan aku sudah mulai memikirkan ini","Cukup besar, ini perlu dibicarakan sebelum menikah","Sangat besar, dan pasanganku perlu tahu ini"] },
+        { id:"Q17", section:"BAGIAN 4 — Realita saat ini", type:"single",
           question:"Kalau ada keputusan besar dan pendapat orang tua serta pasangan berbeda, kamu akan memprioritaskan:",
           options:["Pasanganku, dia keluarga intiku","Tergantung, tidak ada pola yang tetap","Orang tuaku, aku sangat menghormati pendapat mereka","Biasanya aku coba dengarkan keduanya dulu sebelum decide"] },
-        { id:"Q18", section:"REALITA SAAT INI", type:"single",
-          question:"Kalau keluarga besar mulai punya pendapat kuat soal urusan rumah tangga nanti, kamu akan:",
-          options:["Bicara langsung ke mereka soal batasan","Bicara ke pasangan dulu, baru atur bersama","Ikuti dulu — sulit menolak mereka","Belum tahu — tergantung situasinya"] },
-        { id:"Q19", section:"YANG BELUM PERNAH KAMU PIKIRKAN", type:"single",
+        { id:"Q18", section:"BAGIAN 4 — Realita saat ini", type:"single",
+          question:"Kalau keluarga besar mulai ikut campur soal urusan rumah tangga nanti, kamu akan:",
+          options:["Bicara langsung ke mereka soal batasan","Bicara ke pasangan dulu, baru atur bersama","Ikuti dulu, sulit menolak mereka","Belum tahu, tergantung situasinya"] },
+
+        // ================= BAGIAN 5 =================
+        { id:"Q19", section:"BAGIAN 5 — Yang Belum Pernah Kamu Pikirkan", type:"single",
           question:"Dari semua hal tentang pernikahan, yang paling kamu takutkan:",
-          options:["Pasangan tidak setia","Kehilangan bagian dari dirimu yang penting","Terjebak dalam pernikahan yang tidak bahagia","Mengecewakan pasangan — tidak cukup baik","Jarak yang tumbuh pelan-pelan sampai kami jadi asing","Konflik yang tidak pernah benar-benar selesai"] },
-        { id:"Q20", section:"YANG BELUM PERNAH KAMU PIKIRKAN", type:"single",
+          options:["Pasangan tidak setia","Kehilangan bagian dari dirimu yang penting","Terjebak dalam pernikahan yang tidak bahagia","Mengecewakan pasangan, tidak cukup baik","Jarak yang tumbuh pelan-pelan sampai kami jadi asing","Konflik yang tidak pernah benar-benar selesai"] },
+        { id:"Q20", section:"BAGIAN 5 — Yang Belum Pernah Kamu Pikirkan", type:"single",
           question:"Sebelum menikah nanti, hal apa yang paling kamu harap benar-benar dipahami pasanganmu tentang dirimu?",
-          options:["Cara aku menghadapi konflik atau tekanan — aku tidak selalu bisa tenang","Kebutuhanku untuk punya waktu dan ruang sendiri","Kondisi finansial atau tanggungan yang aku punya","Seberapa dekat keluargaku dan seberapa terlibat mereka","Sesuatu dari masa laluku yang mungkin masih berpengaruh","Mimpi atau tujuan yang aku pegang erat — yang mungkin perlu kita pikirkan bersama"] },
-        { id:"Q21", section:"YANG BELUM PERNAH KAMU PIKIRKAN", type:"single",
+          options:["Cara aku menghadapi konflik atau tekanan, aku tidak selalu bisa tenang","Kebutuhanku untuk punya waktu dan ruang sendiri","Kondisi finansial atau tanggungan yang aku punya","Seberapa dekat keluargaku dan seberapa terlibat mereka","Sesuatu dari masa laluku yang mungkin masih berpengaruh","Mimpi atau tujuan yang aku pegang erat, yang mungkin perlu kita pikirkan bersama"] },
+        { id:"Q21", section:"BAGIAN 5 — Yang Belum Pernah Kamu Pikirkan", type:"single",
           question:"Pernah nggak kamu merasa ada bagian dari dirimu yang belum benar-benar diketahui pasanganmu, padahal mungkin penting untuk hubungan ke depan?",
           subtext:"Hampir semua orang punya ini.",
           options:["Tidak ada, aku cukup terbuka","Mungkin ada, tapi rasanya tidak terlalu signifikan","Ada, dan aku berencana menceritakannya sebelum menikah","Ada, tapi belum tahu bagaimana atau kapan harus memulainya","Ada, dan jujur aku tidak yakin akan pernah menceritakannya"] },
-        { id:"Q22", section:"YANG BELUM PERNAH KAMU PIKIRKAN", type:"multi", max:3,
-          question:"Kalau dipikir-pikir, topik mana yang sebenarnya paling jarang benar-benar dibicarakan?",
+        { id:"Q22", section:"BAGIAN 5 — Yang Belum Pernah Kamu Pikirkan", type:"multi", max:3,
+          question:"Kalau dipikir-pikir, topik mana yang sebenarnya masih sering kalian hindari atau belum benar-benar dibahas?",
           subtext:"Pilih maksimal 3.",
-          options:["Kondisi finansial masing-masing yang sebenarnya","Ekspektasi soal siapa handle apa di rumah","Cara masing-masing kalau lagi konflik","Soal anak — kapan, berapa, mendidik bagaimana","Keluarga besar dan seberapa jauh mereka terlibat","Ekspektasi soal kehidupan intim bersama","Ketakutan terdalam tentang pernikahan","Sesuatu dari masa lalu yang mungkin masih berpengaruh"] }
+          options:["Kondisi finansial masing-masing yang sebenarnya","Ekspektasi soal siapa handle apa di rumah","Cara masing-masing kalau lagi konflik","Soal anak, kapan, berapa, mendidik bagaimana","Keluarga besar dan seberapa jauh mereka terlibat","Ekspektasi soal kehidupan intim bersama","Ketakutan terdalam tentang pernikahan","Sesuatu dari masa lalu yang mungkin masih berpengaruh","Semua topik ini sudah pernah kami bahas"] },
+
+        // ================= VALIDASI =================
+        { id:"V1", section:"VALIDASI", type:"single",
+          question:"Dari semua bagian tadi, mana yang paling bikin kamu merasa, \"iya sih, ini aku banget\"?",
+          options:["Cara Kamu di Hubungan Dekat","Cara Kamu Saat Ada yang Tidak Beres","Pernikahan dalam Bayanganmu","Realita saat ini","Yang Belum Pernah Kamu Pikirkan","Tidak ada yang terlalu terasa"] },
+        { id:"V2", section:"VALIDASI", type:"single",
+          question:"Ada nggak pertanyaan tadi yang sempat bikin kamu agak nggak nyaman jawabnya?",
+          options:["Tidak ada","Ada, tapi aku tetap jawab jujur","Ada, dan aku tidak menjawab sepenuhnya"] },
+        { id:"V3", section:"VALIDASI", type:"single",
+          question:"Kalau dari jawaban tadi ternyata ada pola tentang dirimu yang cukup terlihat, kamu mau tahu sekarang?",
+          options:["Iya, justru itu yang paling penting","Iya, tapi mau pelan-pelan","Mungkin, masih butuh waktu","Belum, cukup sampai di sini dulu"] }
     ],
     en: [
-        { id:"Q1", section:"HOW YOU ARE IN CLOSE RELATIONSHIPS", type:"single",
-          question:"When something heavy is on your mind — work, family, or something that disappointed you — you usually:",
-          options:["Talk to the person closest to you right away","Wait until it settles a bit, then share","Handle it yourself most of the time — rarely feel the need to tell anyone","Feel more comfortable talking to a friend than your closest person","Don't know who to talk to"] },
-        { id:"Q2", section:"HOW YOU ARE IN CLOSE RELATIONSHIPS", type:"single",
-          question:"When you're uncomfortable or getting tired in a social situation, you usually:",
-          options:["Tell the person closest to you directly that you need a moment","Hold on until it's over — don't want to be a burden","Send subtle signals, hoping they'll pick up on it","Become quieter or distant without realizing it","Find an excuse to step out — bathroom, phone call, anything"] },
-        { id:"Q3", section:"HOW YOU ARE IN CLOSE RELATIONSHIPS", type:"single",
-          question:"When you're emotionally drained, you're most comfortable if the person closest to you:",
-          options:["Listens — doesn't jump straight to solutions","Helps you find a way out","Stays quietly nearby without needing to say much","Gives you space before you're ready to talk","You don't know yet what you need"] },
-        { id:"Q4", section:"HOW YOU ARE IN CLOSE RELATIONSHIPS", type:"single",
-          question:"If someone close to you seems to have a problem but hasn't said anything, you usually:",
-          options:["Ask directly — you can't pretend not to notice","Wait until they open up on their own","Invite them for food or a walk to ease the mood","Often don't notice right away — only find out when they say something"] },
-        { id:"Q5", section:"WHEN SOMETHING FEELS OFF", type:"single",
+        // ================= PROFILE =================
+        { id:"P1", section:"PROFILE", type:"single",
+          question:"You are:",
+          options:["Male","Female"] },
+        { id:"P2", section:"PROFILE", type:"single",
+          question:"Your current relationship status:",
+          options:[
+              "Single, nothing serious yet",
+              "Seeing someone, not official, but I'm thinking about it seriously",
+              "Dating or in a serious relationship",
+              "Engaged or planning to get married"
+          ],
+          gating: { trigger: "Single, nothing serious yet", message: "This assessment is designed for those who already have a serious someone in their life.\n\nIf you don't right now, that's okay, the timing might not be right yet. Arah Tumbuh has other content that might be a better fit for you at this stage." } },
+        { id:"P3", section:"PROFILE", type:"single",
+          question:"How did you find out about this?",
+          options:["TikTok","Instagram","X / Twitter","From a friend or acquaintance","From a partner or someone close"] },
+        { id:"P4", section:"PROFILE", type:"single",
+          question:"Why did you decide to take this?",
+          options:["Curious about myself","There's something I haven't thought about seriously","Want to be more prepared before marriage","Suggested by a partner or someone close","Something feels off but I don't know exactly what"] },
+
+        // ================= PART 1 =================
+        { id:"Q1", section:"PART 1 — How You Are in Close Relationships", type:"single",
+          question:"When something heavy is on your mind, whether it's work, family, or something disappointing, you usually:",
+          options:["Talk to my partner right away","Wait until it settles a bit, then share","Handle it myself most of the time, rarely feel the need to share","Feel more comfortable talking to a friend than to my partner","Don't know who to talk to"] },
+        { id:"Q2", section:"PART 1 — How You Are in Close Relationships", type:"single",
+          question:"When you're uncomfortable or getting tired in a situation, you usually:",
+          options:["Tell my partner directly that I need a moment outside","Hold on until it's over, don't want to be a burden","Send subtle signals, hoping they'll catch on","Become quieter or distant without realizing it","Find an excuse to step out, bathroom, phone call, or anything"] },
+        { id:"Q3", section:"PART 1 — How You Are in Close Relationships", type:"single",
+          question:"When you're emotionally drained, you're most comfortable if your partner:",
+          options:["Listens, doesn't jump straight to solutions","Helps find a way out","Stays quietly nearby, no need for many words","Gives space first before I'm ready to talk","Don't know yet what I need"] },
+        { id:"Q4", section:"PART 1 — How You Are in Close Relationships", type:"single",
+          question:"If your partner seems to have a problem but hasn't said anything, you usually:",
+          options:["Ask directly because I can't pretend not to notice","Wait until they open up on their own","Invite them for food or a walk to ease the mood","Often don't notice right away, only find out when they tell me"] },
+
+        // ================= PART 2 =================
+        { id:"Q5", section:"PART 2 — How You Are When Something Feels Off", type:"single",
           question:"If something in the relationship has been bothering you, you usually:",
-          options:["Say it right away","Choose what needs to be addressed and what doesn't","Wait for the right timing","Let it pass so it doesn't escalate","Keep it to yourself — indefinitely"] },
-        { id:"Q6", section:"WHEN SOMETHING FEELS OFF", type:"single",
-          question:"When there's conflict or misunderstanding with your partner, it usually ends with:",
+          options:["Say it right away","Choose what needs to be addressed, what doesn't","Wait for the right timing first","Let it pass so it doesn't escalate","Keep it to myself, indefinitely"] },
+        { id:"Q6", section:"PART 2 — How You Are When Something Feels Off", type:"single",
+          question:"When there's a conflict or misunderstanding with your partner, it usually ends with:",
           subtext:"If you've never had a serious conflict, pick the closest option.",
-          options:["A thorough discussion until both feel at peace","One person gives in — but the issue isn't truly resolved","Stopping because both are tired, not because it's resolved","Continuing as if nothing happened","'Making up' because time passed, not because it was resolved"] },
-        { id:"Q7", section:"WHEN SOMETHING FEELS OFF", type:"single",
+          options:["A thorough discussion until both feel relieved","One person gives in, but the issue isn't truly resolved","Stopping because both are tired, not because it's resolved","Continuing as if nothing happened","Making up because time passed, not because it was resolved"] },
+        { id:"Q7", section:"PART 2 — How You Are When Something Feels Off", type:"single",
           question:"When you're angry or disappointed with your partner, you usually:",
-          options:["Can still talk even when emotional","Need a pause before you can speak clearly","Go quiet or pull away — need distance first","Words come out harsher than intended"] },
-        { id:"Q8", section:"WHEN SOMETHING FEELS OFF", type:"single",
-          question:"When the relationship starts feeling uncomfortable, you're usually the one who:",
+          options:["Can still talk even when emotional","Need a pause first before I can speak clearly","Go quiet or pull away, need distance first","Words come out harsher than intended"] },
+        { id:"Q8", section:"PART 2 — How You Are When Something Feels Off", type:"single",
+          question:"When the relationship starts feeling uncomfortable, you are usually the one who:",
           options:["Tries to bring the mood back to normal","Goes quiet until calmer","Focuses on keeping the problem from getting bigger","Holds a lot in alone","Keeps thinking about it because it feels like going in circles"] },
-        { id:"Q9", section:"WHEN SOMETHING FEELS OFF", type:"single",
-          question:"If there's a habit of your partner's that actually bothers you but you haven't said anything, you usually:",
-          options:["Eventually say it directly","Wait for the right moment, then say it","Don't say it — just adapt","Don't say it — and slowly feel a distance forming","Say it indirectly, hoping they catch on"] },
-        { id:"Q_OPEN", section:"PAUSE FOR A MOMENT", type:"text",
-          question:"Before we continue — Has there ever been something in your relationship that you've been meaning to talk about, but still haven't?",
-          subtext:"Doesn't need to be long. One sentence is enough. Spontaneous answers are usually the most honest." },
-        { id:"Q10", section:"YOUR VISION OF MARRIAGE", type:"single",
+        { id:"Q9", section:"PART 2 — How You Are When Something Feels Off", type:"single",
+          question:"If there's a habit of your partner's that actually bothers you, but you haven't said anything, you usually:",
+          options:["Eventually say it directly","Wait for the right moment, then say it","Don't say anything, just adapt","Don't say anything, and slowly feel a distance forming","Say it indirectly, hoping they catch on"] },
+       
+        // ================= PART 3 =================
+        { id:"Q10", section:"PART 3 — Your Vision of Marriage", type:"single",
           question:"When you imagine coming home after getting married, what you picture most is:",
-          options:["Talking about each other's day over food or relaxing together","Being in the same space but each needing alone time first","One of you already has something prepared for the other","No fixed image — depends on the situation","Honestly, I've never really pictured it"] },
-        { id:"Q11", section:"YOUR VISION OF MARRIAGE", type:"single",
-          question:"When it comes to daily household responsibilities after marriage — cooking, cleaning, bills, etc. — your expectation is closest to:",
-          options:["Discussed and agreed upon first — who handles what","Split as evenly as possible","Whoever has more time or skill takes it","Some things naturally suit one person more — and that's fine","Haven't thought that far ahead"] },
-        { id:"Q12", section:"YOUR VISION OF MARRIAGE", type:"single",
-          question:"Of all these, what is the ONE thing you absolutely cannot compromise on in marriage?",
-          subtext:"Choose the ONE most honest answer.",
-          options:["Being able to talk deeply about anything with my partner","Safety — not fearing judgment or abandonment","Mutually supporting each other's goals and ambitions","A healthy and connected intimate life","Financial honesty — nothing hidden","Sharing one core value or way of life","The freedom to remain myself"] },
-        { id:"Q14", section:"YOUR CURRENT REALITY", type:"single",
+          options:["Talking about each other's day over food or relaxing together","Being in the same space but each needing alone time first","One of you already has something prepared for the other","No fixed image, depends on the situation","Honestly, never really pictured it"] },
+        { id:"Q11", section:"PART 3 — Your Vision of Marriage", type:"single",
+          question:"When it comes to daily household chores after marriage like cooking, cleaning, paying bills, your expectation is closest to:",
+          options:["Discussed and agreed upon first, who handles what","Split as evenly as possible","Whoever has more time or skill, they take it","Some things naturally suit one person more, and that's normal","Haven't thought that far ahead"] },
+        { id:"Q12", section:"PART 3 — Your Vision of Marriage", type:"single",
+          question:"Which of these, if missing, would make the marriage feel empty to you?",
+          subtext:"Choose the one most honest answer.",
+          options:["Being able to talk deeply about anything with my partner","Safety, not fearing judgment or abandonment","Mutually supporting each other's goals and ambitions","A healthy sexual life","Financial honesty, nothing hidden","Sharing one core value or way of life","The freedom to remain myself"] },
+        { id:"Q13", section:"PART 3 — Your Vision of Marriage", type:"single",
+          question:"Regarding religion in your future household, you envision it as:",
+          subtext:"There are no better or worse answers here.",
+          options:["Very important, I want a partner who is serious about practicing it","Important as a value, but daily practice can be flexible","Present but not dominating daily decisions","Still in process, can't say for sure yet"] },
+
+        // ================= PART 4 =================
+        { id:"Q14", section:"PART 4 — Your Current Reality", type:"single",
           question:"Your financial situation right now, honestly:",
-          options:["Fairly stable, no significant pressure","Have loans or obligations, but manageable","There's pressure I'm currently handling","There's something financial I haven't told my partner or prospective partner","Not stable and not yet organized"] },
-        { id:"Q15", section:"YOUR CURRENT REALITY", type:"single",
+          options:["Fairly stable, no significant pressure","Have loans or obligations, but manageable","There's pressure I'm currently handling","There's a financial matter I haven't told my partner about","Not stable and not yet organized"] },
+        { id:"Q15", section:"PART 4 — Your Current Reality", type:"single",
           question:"Have you ever felt the need to appear more financially secure than you actually are?",
-          options:["Almost never — I'm fairly open about my situation","Occasionally, so the moment isn't disrupted","Fairly often — uncomfortable if they knew the real situation","Often — and I know this is something I need to address"] },
-        { id:"Q16", section:"YOUR CURRENT REALITY", type:"single",
+          options:["Almost never, I'm fairly open about my situation","Occasionally, so the moment isn't disrupted","Fairly often, uncomfortable if they knew the real situation","Often, and I know this is something I need to address"] },
+        { id:"Q16", section:"PART 4 — Your Current Reality", type:"single",
           question:"After getting married, how likely is it that you'll still have regular financial responsibilities to your family?",
-          options:["Very unlikely — my parents are financially independent","Possibly — and I've started thinking about this","Fairly likely — this needs to be talked about before marriage","Very likely — and my future partner needs to know this"] },
-        { id:"Q17", section:"YOUR CURRENT REALITY", type:"single",
+          options:["Very unlikely, my parents are financially independent","Possibly, and I've started thinking about this","Fairly likely, this needs to be discussed before marriage","Very likely, and my partner needs to know this"] },
+        { id:"Q17", section:"PART 4 — Your Current Reality", type:"single",
           question:"If there's a big decision and your parents' and partner's opinions differ, you would prioritize:",
-          options:["My partner — they're my core family","Depends — no fixed pattern","My parents — I deeply respect their opinion","Usually I try to listen to both before deciding"] },
-        { id:"Q18", section:"YOUR CURRENT REALITY", type:"single",
-          question:"If extended family starts having strong opinions about your household matters, you would:",
-          options:["Talk to them directly about boundaries","Talk to my partner first, then figure it out together","Go along with it — hard to refuse them","Don't know yet — depends on the situation"] },
-        { id:"Q19", section:"WHAT YOU'VE NEVER THOUGHT ABOUT", type:"single",
+          options:["My partner, they are my core family","Depends, no fixed pattern","My parents, I deeply respect their opinion","Usually I try to listen to both first before deciding"] },
+        { id:"Q18", section:"PART 4 — Your Current Reality", type:"single",
+          question:"If extended family starts intervening in your household matters, you would:",
+          options:["Talk to them directly about boundaries","Talk to my partner first, then figure it out together","Go along with it, hard to refuse them","Don't know yet, depends on the situation"] },
+
+        // ================= PART 5 =================
+        { id:"Q19", section:"PART 5 — What You've Never Thought About", type:"single",
           question:"Of everything about marriage, what you fear most is:",
-          options:["A partner who's unfaithful","Losing an important part of yourself","Being trapped in an unhappy marriage","Disappointing your partner — not being good enough","Distance that grows slowly until you become strangers","Conflict that never truly gets resolved"] },
-        { id:"Q20", section:"WHAT YOU'VE NEVER THOUGHT ABOUT", type:"single",
-          question:"Before marriage, what do you most hope your partner truly understands about you?",
-          options:["How I handle conflict or pressure — I can't always stay calm","My need for personal time and space","My financial situation or obligations","How close my family is and how involved they are","Something from my past that might still affect me","Dreams or goals I hold close — that we might need to think about together"] },
-        { id:"Q21", section:"WHAT YOU'VE NEVER THOUGHT ABOUT", type:"single",
-          question:"Have you ever felt there's a part of you your partner doesn't truly know, yet might be important for the future of the relationship?",
+          options:["An unfaithful partner","Losing an important part of yourself","Being trapped in an unhappy marriage","Disappointing my partner, not being good enough","Distance that grows slowly until we become strangers","Conflict that never truly gets resolved"] },
+        { id:"Q20", section:"PART 5 — What You've Never Thought About", type:"single",
+          question:"Before getting married, what do you most hope your partner truly understands about you?",
+          options:["How I handle conflict or pressure, I can't always stay calm","My need for personal time and space","My financial situation or obligations","How close my family is and how involved they are","Something from my past that might still affect me","Dreams or goals I hold close, that we might need to think about together"] },
+        { id:"Q21", section:"PART 5 — What You've Never Thought About", type:"single",
+          question:"Have you ever felt there's a part of you your partner doesn't truly know, yet might be important for the future?",
           subtext:"Almost everyone has this.",
           options:["No, I'm fairly open","Maybe, but it doesn't feel that significant","Yes, and I plan to share it before getting married","Yes, but I don't yet know how or when to start","Yes, and honestly I'm not sure I ever will"] },
-        { id:"Q22", section:"WHAT YOU'VE NEVER THOUGHT ABOUT", type:"multi", max:3,
-          question:"Thinking about it, which topics have actually been talked about the least?",
+        { id:"Q22", section:"PART 5 — What You've Never Thought About", type:"multi", max:3,
+          question:"Thinking about it, which topics are actually still often avoided or haven't been truly discussed?",
           subtext:"Choose up to 3.",
-          options:["Each other's actual financial situation","Expectations about who handles what at home","How each person handles conflict","Children — when, how many, how to raise them","Extended family and how involved they should be","Expectations about intimate life together","Deepest fears about marriage","Something from the past that might still have an impact"] }
+          options:["Each other's actual financial situation","Expectations about who handles what at home","How each person handles conflict","Children, when, how many, how to raise them","Extended family and how involved they should be","Expectations about intimate life together","Deepest fears about marriage","Something from the past that might still have an impact","We have already discussed all these topics"] },
+
+        // ================= VALIDATION =================
+        { id:"V1", section:"VALIDATION", type:"single",
+          question:"Out of all the sections, which one made you feel most like, \"yeah, this is so me\"?",
+          options:["How You Are in Close Relationships","How You Are When Something Feels Off","Your Vision of Marriage","Your Current Reality","What You've Never Thought About","None of them resonated too much"] },
+        { id:"V2", section:"VALIDATION", type:"single",
+          question:"Were there any questions that made you feel a bit uncomfortable to answer?",
+          options:["None","Yes, but I still answered honestly","Yes, and I didn't answer fully"] },
+        { id:"V3", section:"VALIDATION", type:"single",
+          question:"If your answers reveal a clear pattern about yourself, do you want to know it now?",
+          options:["Yes, that's exactly what's most important","Yes, but I want to take it slow","Maybe, still need some time","Not yet, this is enough for now"] }
     ]
 };
 
@@ -912,6 +1015,44 @@ let userAnswers = {};
 let selectedMulti = [];
 let userData = { name: "", wa: "", email: "" };
 
+/* --- SISTEM SAVE PROGRESS --- */
+function saveProgress() {
+    localStorage.setItem('arahTumbuhProgress', JSON.stringify({
+        currentIndex: currentIndex,
+        userAnswers: userAnswers,
+        userData: userData
+    }));
+}
+function clearProgress() {
+    localStorage.removeItem('arahTumbuhProgress');
+}
+function checkSavedProgress() {
+    const saved = localStorage.getItem('arahTumbuhProgress');
+    if (saved) {
+        const data = JSON.parse(saved);
+        if (Object.keys(data.userAnswers || {}).length > 0) {
+            const msg = currentLang === 'id' ? "Anda memiliki asesmen yang belum selesai. Lanjutkan dari sebelumnya?" : "You have an unfinished assessment. Resume?";
+            if (confirm(msg)) {
+                // Kembalikan data yang tersimpan
+                currentIndex = data.currentIndex || 0;
+                userAnswers = data.userAnswers || {};
+                userData = data.userData || { name: "", wa: "", email: "" };
+                
+                // Isi ulang form data diri
+                document.getElementById('user-name').value = userData.name;
+                document.getElementById('user-wa').value = userData.wa;
+                document.getElementById('user-email').value = userData.email;
+                
+                // Langsung lompat ke pertanyaan terakhir
+                showScreen('quiz-screen');
+                renderQuestion();
+            } else {
+                clearProgress(); // Hapus data jika pengguna memilih batal
+            }
+        }
+    }
+}
+
 // Google Apps Script URL — Ganti dengan URL Anda
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyPXcevWrkCRfTdPy6CUYwS1vEueB2X5gEomGvzWkdGf6L9lLuXVAj5sCwB51A-ylD-6w/exec';
 
@@ -926,8 +1067,8 @@ function setLang(lang) {
     const L = LANG_PACK[lang];
     document.getElementById('intro-label').textContent = L.introLabel;
     document.getElementById('intro-title').textContent = L.introTitle;
-    document.getElementById('intro-desc').textContent = L.introDesc;
-    document.getElementById('intro-quote').textContent = L.introQuote;
+    document.getElementById('intro-desc').innerHTML = L.introDesc;
+    document.getElementById('intro-quote').innerHTML = L.introQuote;
     document.getElementById('intro-btn').textContent = L.introBtn;
     document.getElementById('back-label').textContent = L.backLabel;
     document.getElementById('form-title').textContent = L.formTitle;
@@ -969,6 +1110,7 @@ function startQuiz() {
     userAnswers = {};
     selectedMulti = [];
 
+    saveProgress(); // Mulai menyimpan data diri
     showScreen('quiz-screen');
     renderQuestion();
 }
@@ -1065,6 +1207,18 @@ function updateMultiBtn(q) {
 }
 
 function nextQuestion() {
+    const q = questions[currentIndex];
+    
+    // Logika Gating untuk P2
+    if (q.gating && userAnswers[q.id] === q.gating.trigger) {
+        alert(q.gating.message);
+        showScreen('intro-screen');
+        clearProgress(); // Hapus progres karena sesi dihentikan
+        return; 
+    }
+
+    saveProgress(); // Simpan jawaban secara otomatis
+    
     if (currentIndex < questions.length - 1) {
         currentIndex++;
         animateAndRender();
@@ -1074,6 +1228,7 @@ function nextQuestion() {
 }
 
 function previousQuestion() {
+    saveProgress(); // Simpan jawaban saat kembali
     if (currentIndex > 0) {
         currentIndex--;
         animateAndRender();
@@ -1093,6 +1248,7 @@ function animateAndRender() {
 ==================================================== */
 function processEngineAndSubmit() {
     const L = LANG_PACK[currentLang];
+    clearProgress(); // Bersihkan progres karena asesmen sudah selesai dikerjakan
 
     // Konversi jawaban ke huruf
     let ansLetters = {};
@@ -1131,6 +1287,7 @@ function processEngineAndSubmit() {
         document.getElementById('result-desc').textContent     = patternData.desc[currentLang];
         document.getElementById('result-insight').textContent  = patternData.insight[currentLang];
         document.getElementById('result-section-label').textContent = L.resultSectionLabel;
+        document.getElementById('result-blurred').textContent  = L.blurredText; // Memanggil teks blur
 
         // Paywall
         document.getElementById('paywall-title').textContent = L.paywallTitle;
@@ -1151,6 +1308,10 @@ function processEngineAndSubmit() {
         .then(() => showResult(L.overviewOk))
         .catch(() => showResult(L.overviewFail));
 }
+// Inisialisasi bahasa saat halaman pertama kali dibuka
+setLang('id');
+checkSavedProgress(); // Mengecek otomatis apakah ada progres tertinggal
+
 </script>
 
 </body>
