@@ -4,6 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sebelum Iya — Asesmen | Arah Tumbuh</title>
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '931354349975620');
+    fbq('track', 'PageView');
+
+    // === HARGA PRODUK — UBAH DI SINI AJA kalau harga berubah ===
+    // Set sama persis dgn harga yang ditagih di Lynk.id biar ROAS akurat.
+    window.PIXEL_VALUE = 24900;
+
+    // Orang buka halaman produk (asesmen) = ViewContent
+    fbq('track', 'ViewContent', {
+        content_name: 'Sebelum Iya',
+        content_category: 'Asesmen Pranikah',
+        value: window.PIXEL_VALUE,
+        currency: 'IDR'
+    });
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=931354349975620&ev=PageView&noscript=1"/></noscript>
+    <!-- End Meta Pixel Code -->
+
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         /* ================================================
@@ -489,7 +519,7 @@
                 <li><strong>Blind Spot:</strong> Konsekuensi yang mengintai jika pola ini dibiarkan.</li>
                 <li><strong>Framework Percakapan:</strong> Panduan konkret untuk membahas ini bersama pasangan.</li>
             </ul>
-            <a href="#" id="lynk-btn" class="btn btn-primary" target="_blank" rel="noopener">Buka Hasil Lengkap — Rp 34.900</a>
+            <a href="#" id="lynk-btn" class="btn btn-primary" target="_blank" rel="noopener" onclick="if(window.fbq)fbq('track','InitiateCheckout',{content_name:'Sebelum Iya',value:window.PIXEL_VALUE,currency:'IDR'});">Buka Hasil Lengkap — Rp 34.900</a>
         </div>
     </div>
 
@@ -1106,6 +1136,14 @@ function startQuiz() {
     if (!/^[^\s@]+@[^\s@]+\.[cC][oO][mM]$/.test(email)) { alert(L.validationEmail); return; }
 
     userData = { name, wa, email };
+
+    // Lead: user kasih kontak (nama/WA/email) = sinyal mid-funnel kuat
+    if (window.fbq) fbq('track', 'Lead', {
+        content_name: 'Sebelum Iya',
+        value: window.PIXEL_VALUE,
+        currency: 'IDR'
+    });
+
     currentIndex = 0;
     userAnswers = {};
     selectedMulti = [];
@@ -1302,6 +1340,14 @@ function processEngineAndSubmit() {
         document.getElementById('lynk-btn').textContent = L.paywallBtn;
         document.getElementById('lynk-btn').href        = patternData.link;
         document.getElementById('paywall-box').style.display = 'block';
+
+        // CompleteRegistration: user kelar 22 pertanyaan & lihat hasil = engagement terkuat sebelum checkout
+        if (window.fbq) fbq('track', 'CompleteRegistration', {
+            content_name: 'Sebelum Iya',
+            status: true,
+            value: window.PIXEL_VALUE,
+            currency: 'IDR'
+        });
     }
 
     fetch(SCRIPT_URL, { method: 'POST', body: formData })
