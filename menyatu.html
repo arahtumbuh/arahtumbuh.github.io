@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Menyatu — Asesmen | Arah Tumbuh</title>
+    <!-- Mengambil font dari Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- SISTEM DESAIN ARAH TUMBUH --- */
+        :root {
+            --warm-sand: #F9F8F6;
+            --deep-forest: #182A26;
+            --terracotta: #C86A4C;
+            --charcoal: #33363F;
+            --white: #FFFFFF;
+            --border-light: #EAE6DF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--warm-sand);
+            color: var(--charcoal);
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+        }
+
+        h1, h2, h3 {
+            font-family: 'League Spartan', sans-serif;
+            color: var(--deep-forest);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* Container menyesuaikan rasio mobile (Mobile First) */
+        #app-container {
+            width: 100%;
+            max-width: 480px;
+            min-height: 100vh;
+            position: relative;
+            background-color: var(--warm-sand);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigasi / Header */
+        header {
+            padding: 24px 24px 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 10;
+        }
+        .logo-text {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 20px;
+            color: var(--deep-forest);
+            letter-spacing: 0.5px;
+        }
+
+        /* Transisi Antar Layar */
+        .screen {
+            display: none;
+            flex: 1;
+            padding: 16px 24px 32px 24px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            flex-direction: column;
+        }
+        .screen.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Onboarding */
+        .onboarding-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .onboarding-content h1 {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+        .onboarding-content p {
+            font-size: 16px;
+            margin-bottom: 24px;
+            color: var(--charcoal);
+        }
+
+        /* Kuesioner */
+        .progress-bar-container {
+            width: 100%;
+            height: 4px;
+            background-color: var(--border-light);
+            border-radius: 4px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: var(--terracotta);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        .babak-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--terracotta);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        .question-text {
+            font-size: 24px;
+            font-family: 'League Spartan', sans-serif;
+            color: var(--deep-forest);
+            margin-bottom: 32px;
+            line-height: 1.3;
+        }
+        
+        /* Pilihan Jawaban */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .option-card {
+            background-color: var(--white);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 16px 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .option-card:hover {
+            border-color: var(--deep-forest);
+        }
+        .option-card.selected {
+            background-color: var(--deep-forest);
+            color: var(--white);
+            border-color: var(--deep-forest);
+        }
+
+        /* Tombol Aksi */
+        .btn {
+            background-color: var(--deep-forest);
+            color: var(--white);
+            border: none;
+            border-radius: 999px;
+            padding: 18px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+            transition: opacity 0.3s ease;
+            margin-top: auto;
+        }
+        .btn:disabled {
+            background-color: #A3ACA9;
+            cursor: not-allowed;
+        }
+
+        /* Layar Loading */
+        #processing-screen {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--border-light);
+            border-top: 4px solid var(--terracotta);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 24px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Layar Hasil */
+        .result-header {
+            margin-bottom: 32px;
+        }
+        .result-header h2 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .dashboard-container {
+            background-color: var(--white);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-light);
+        }
+        .dash-item {
+            margin-bottom: 16px;
+        }
+        .dash-item:last-child {
+            margin-bottom: 0;
+        }
+        .dash-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--charcoal);
+        }
+        .dash-bar-bg {
+            width: 100%;
+            height: 8px;
+            background-color: var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .dash-bar-fill {
+            height: 100%;
+            background-color: var(--terracotta);
+            border-radius: 8px;
+        }
+
+        .pattern-card {
+            background-color: var(--deep-forest);
+            color: var(--white);
+            border-radius: 24px;
+            padding: 32px 24px;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        .pattern-card h3 {
+            color: var(--white);
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+        .pattern-subtitle {
+            font-size: 14px;
+            opacity: 0.8;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-container">
+    <header>
+        <div class="logo-text">Arah Tumbuh</div>
+        <div style="font-size:12px; color: #888;">Menyatu (Musim 02)</div>
+    </header>
+
+    <!-- Layar Onboarding -->
+    <div id="onboarding-screen" class="screen active">
+        <div class="onboarding-content">
+            <h1>Memetakan<br>Arah Tumbuh.</h1>
+            <p>Menikah sebaiknya tidak dibangun di atas asumsi yang tak terucap.</p>
+            <p>Asesmen ini dirancang layaknya sesi konseling mandiri. Tidak ada skor benar atau salah, hanya cermin untuk merefleksikan kembali dinamika dan benang merah perilaku hubungan kalian dari hari ke hari.</p>
+            <p>Mari menavigasi persimpangan ini, bersama.</p>
+        </div>
+        <button class="btn" onclick="startAssessment()">Mulai Memetakan</button>
+    </div>
+
+    <!-- Layar Kuesioner -->
+    <div id="question-screen" class="screen">
+        <div class="progress-bar-container">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+        <div id="babak-indicator" class="babak-label">BABAK 1</div>
+        <div id="question-text" class="question-text">Memuat pertanyaan...</div>
+        
+        <div id="options-container" class="options-container">
+            <!-- Render via JS -->
+        </div>
+
+        <button id="next-btn" class="btn" disabled onclick="nextQuestion()">Lanjut</button>
+    </div>
+
+    <!-- Layar Loading -->
+    <div id="processing-screen" class="screen">
+        <div class="spinner"></div>
+        <h2 style="font-size: 24px; margin-bottom:16px;">Menganalisis Pola...</h2>
+        <p style="color:var(--charcoal);">Membaca dinamika dan menyusun peta hubungan Anda.</p>
+    </div>
+
+    <!-- Layar Hasil -->
+    <div id="result-screen" class="screen">
+        <div class="result-header">
+            <h2>Peta Dinamika<br>Hubunganmu</h2>
+            <p>Ini adalah potret sistem hubungan kalian saat ini.</p>
+        </div>
+
+        <!-- Dasbor Mini -->
+        <div class="dashboard-container">
+            <h3 style="font-size:16px; margin-bottom: 24px;">Kesehatan Sistem (0-100)</h3>
+            <div id="dashboard-render"></div>
+        </div>
+
+        <!-- Pola Primer -->
+        <div class="pattern-card">
+            <div class="pattern-subtitle">POLA UTAMA ANDA</div>
+            <h3 id="res-primer-nama">Si Penjaga Damai</h3>
+            <p id="res-severity-flag" style="font-size: 14px; margin-top:16px; opacity: 0.9;"></p>
+        </div>
+
+        <button class="btn" onclick="alert('Ini akan mengarahkan ke halaman pembayaran / unduh PDF berbayar (Rp 29.900) sesuai skenario.')">Buka Hasil Lengkap — Rp 29.900</button>
+    </div>
+</div>
+
+<script>
+    // ==========================================
+    // DATA KUESIONER (25 Pertanyaan Lengkap)
+    // ==========================================
+    const questionsData = [
+        // BABAK 1
+        { id: "Q1", babak: "Babak 1: Kita Hari Ini", text: "Mengingat 30 hari terakhir, jika harus memilih satu momen yang rasanya \"kita banget\", momen seperti apa yang paling tergambar?", opts: [ {v:"A", t:"Ngobrol santai berdua, tanpa layar"}, {v:"B", t:"Beresin satu masalah bareng sampai selesai"}, {v:"C", t:"Diam-diaman tapi nyaman, masing-masing sibuk sendiri"}, {v:"D", t:"Jujur, agak susah nyari momennya belakangan ini"}, {v:"E", t:"Momen kecil, kayak ketawa bareng karena hal receh"} ]},
+        { id: "Q2", babak: "Babak 1: Kita Hari Ini", text: "Di hari biasa, bagaimana cara kalian menjaga agar \"kabar hati\" tetap tersambung?", opts: [ {v:"A", t:"Ngobrol langsung, hampir tiap hari"}, {v:"B", t:"Lewat chat singkat, yang penting tahu kabar"}, {v:"C", t:"Menebak dari gelagat, jarang ditanya langsung"}, {v:"D", t:"Baru benar-benar ngobrol dalam kalau sedang ada masalah"}, {v:"E", t:"Hampir selalu bergantung pada inisiatifku untuk bertanya duluan"} ]},
+        { id: "Q3", babak: "Babak 1: Kita Hari Ini", text: "Waktu kapasitas energimu sedang habis (capek banget) dan sebenarnya butuh bantuan dari dia, apa respons pertamamu?", opts: [ {v:"A", t:"Bilang langsung dan jelas apa yang kubutuhkan"}, {v:"B", t:"Kasih kode atau petunjuk, berharap dia peka"}, {v:"C", t:"Diam saja, nanti lelahnya juga hilang sendiri"}, {v:"D", t:"Pilih urus semuanya sendiri, lebih cepat selesai"}, {v:"E", t:"Menunggu sampai dia menyadari dan bertanya duluan"} ]},
+        // BABAK 2
+        { id: "Q4", babak: "Babak 2: Ritme Serumah", text: "Dalam 7 hari terakhir saat rutinitas padat, bagaimana urusan logistik fisik rumah terselesaikan?", opts: [ {v:"A", t:"Ada kesepakatan tugas yang jelas dan berjalan baik"}, {v:"B", t:"Mengalir saja, kadang timpang tapi tidak dipermasalahkan"}, {v:"C", t:"Kebanyakan aku yang pegang, dan diam-diam aku kelelahan"}, {v:"D", t:"Sering jadi bahan sindiran-sindiran kecil di antara kami"}, {v:"E", t:"Sering terhambat karena standarku dan standarnya beda jauh"} ]},
+        { id: "Q5", babak: "Babak 2: Ritme Serumah", text: "Di luar urusan fisik, siapa yang kepalanya paling penuh menjadi \"Manajer\" (jadwal, tagihan)?", opts: [ {v:"A", t:"Berbagi peran dengan adil, tanggung jawab seimbang"}, {v:"B", t:"Porsi kepalaku jauh lebih penuh memikirkan operasional"}, {v:"C", t:"Aku yang mengatur semuanya, dia baru bergerak kalau diinstruksi"}, {v:"D", t:"Dia yang lebih banyak mengingat detail dan mengatur"}, {v:"E", t:"Banyak yang terlewat karena kami berdua sama-sama sibuk/lupa"} ]},
+        { id: "Q6", babak: "Babak 2: Ritme Serumah", text: "Membahas keuangan sebulan terakhir, mana yang paling akurat?", opts: [ {v:"A", t:"Terbuka penuh, tahu angka masing-masing"}, {v:"B", t:"Tahu garis besarnya, detail teknis pegang sendiri-sendiri"}, {v:"C", t:"Ada pengeluaran/cicilanku yang sengaja tidak kuceritakan"}, {v:"D", t:"Membahas uang sering tegang, jadi kami jarang membahasnya"}, {v:"E", t:"Satu orang pegang semua kendali, satunya terima jadi"} ]},
+        { id: "Q7", babak: "Babak 2: Ritme Serumah", text: "Soal kedekatan fisik kalian belakangan ini (sentuhan hingga hubungan suami istri), mana yang paling jujur?", opts: [ {v:"A", t:"Masih hangat dan terjaga, kami sama-sama nyaman"}, {v:"B", t:"Naik turun, tapi kami bisa membahasnya dengan santai"}, {v:"C", t:"Makin jarang, tergerus kelelahan dan ritme yang jalan sendiri"}, {v:"D", t:"Salah satu dari kami sebenarnya ingin lebih, tapi memilih diam"}, {v:"E", t:"Ini justru topik yang paling kami hindari untuk dibahas"} ]},
+        { id: "Q8", babak: "Babak 2: Ritme Serumah", text: "Saat punya ekspektasi tentang bagaimana rumah ini \"seharusnya\" diurus, ekspektasi itu biasanya...", opts: [ {v:"A", t:"Sudah kubicarakan terbuka dan disepakati"}, {v:"B", t:"Sebagian kubilang, sebagian sengaja kusimpan"}, {v:"C", t:"Hanya di kepalaku, merasa \"harusnya dia ngerti sendiri\""}, {v:"D", t:"Kutunjukkan langsung lewat contoh, bukan kata-kata"}, {v:"E", t:"Aku santai saja, tidak terlalu punya standar khusus"} ]},
+        { id: "Q9", babak: "Babak 2: Ritme Serumah", text: "Ketika caranya membereskan rumah meleset dari harapanmu, kamu paling sering...", opts: [ {v:"A", t:"Bilang baik-baik saat itu juga"}, {v:"B", t:"Diam saja, tapi diam-diam kuulang/kubenarkan sendiri"}, {v:"C", t:"Kutahan di mulut, tapi kesalnya terbawa seharian"}, {v:"D", t:"Kujadikan bahan bercandaan (meski sebenarnya menyindir)"}, {v:"E", t:"Kubiarkan saja, caranya memang beda dan tidak apa-apa"} ]},
+        // BABAK 3
+        { id: "Q10", babak: "Babak 3: Siklus Pulih", text: "Mengingat perselisihan memanas terakhir kali, apa insting pertamamu?", opts: [ {v:"A", t:"Selesaikan detik itu juga, pantang dibawa tidur"}, {v:"B", t:"Mengambil jarak untuk diam dulu biar adem"}, {v:"C", t:"Memilih diam menutup diri, masalah tak pernah dibahas lagi"}, {v:"D", t:"Suara naik duluan, baru menyesalnya belakangan"}, {v:"E", t:"Mengalihkan obrolan ke hal lain supaya cepat cair"} ]},
+        { id: "Q11", babak: "Babak 3: Siklus Pulih", text: "Setelah selisih paham hebat terakhir kali, berapa lama waktu aktual sampai suasana cair?", opts: [ {v:"A", t:"Sangat cepat, hitungan jam di hari yang sama sudah biasa"}, {v:"B", t:"Butuh waktu semalaman, besok paginya perlahan mencair"}, {v:"C", t:"Berhari-hari saling mendiamkan sebelum normal lagi"}, {v:"D", t:"Pura-pura lupa habis bertengkar, langsung ngobrol seolah tak ada apa-apa"}, {v:"E", t:"Sisa ketegangan konflik itu masih terasa mengganjal sampai hari ini"} ]},
+        { id: "Q12", babak: "Babak 3: Siklus Pulih", text: "Setelah pertengkaran mereda, siapa yang biasanya inisiatif mencairkan suasana?", opts: [ {v:"A", t:"Gantian, tergantung situasi"}, {v:"B", t:"Hampir selalu aku"}, {v:"C", t:"Hampir selalu dia"}, {v:"D", t:"Nggak ada yang mulai, didiamkan sampai hilang sendiri"}, {v:"E", t:"Kami jarang sekali bertengkar hebat"} ]},
+        { id: "Q13", babak: "Babak 3: Siklus Pulih", text: "Apakah ada topik tertentu yang diam-diam sengaja kamu hindari agar tidak panjang urusannya?", opts: [ {v:"A", t:"Nggak ada, kami aman membahas apa pun"}, {v:"B", t:"Ada, biasanya soal uang"}, {v:"C", t:"Ada, biasanya soal keluarga besar/mertua"}, {v:"D", t:"Ada, soal rencana jangka panjang (anak, tempat tinggal, karier)"}, {v:"E", t:"Lumayan banyak topik yang kuhindari (pilih main aman)"} ]},
+        { id: "Q14", babak: "Babak 3: Siklus Pulih", text: "Waktu melihat raut wajahnya sedang tidak baik-baik saja (stres), apa respons refleksmu?", opts: [ {v:"A", t:"Langsung kutanya saat itu juga ada masalah apa"}, {v:"B", t:"Kuberi ruang sendiri dulu, nanti baru kutanya"}, {v:"C", t:"Langsung cemas memikirkan kondisi hubungan kita"}, {v:"D", t:"Fokus memperbaiki suasananya biar cepat normal"}, {v:"E", t:"Tunggu sampai dia cerita sendiri"} ]},
+        { id: "Q15", babak: "Babak 3: Siklus Pulih", text: "Dalam sebulan terakhir, kalimat mana yang paling sering batal diucapkan (ditelan)?", opts: [ {v:"A", t:"\"Aku capek banget, aku juga butuh dibantu.\""}, {v:"B", t:"\"Sebenarnya aku kecewa lho soal hal itu.\""}, {v:"C", t:"\"Aku takut aku kurang baik buat kamu.\""}, {v:"D", t:"\"Sebenarnya aku nggak setuju dengan rencana kita.\""}, {v:"E", t:"Hampir nggak ada. Merasa sesuatu, langsung diucapkan."} ]},
+        { id: "Q16", babak: "Babak 3: Siklus Pulih", text: "Waktu stres hidup lagi di puncak, ke mana beban itu kamu buang?", opts: [ {v:"A", t:"Cerita ke dia (tempat pulang pertama)"}, {v:"B", t:"Kupendam sendiri, dia tidak perlu ikut pusing"}, {v:"C", t:"Ke orang lain dulu, baru ke dia"}, {v:"D", t:"Kubawa pulang, bikin aku sensitif dan gampang kesenggol"}, {v:"E", t:"Sibukkan diri sampai stres terlupa"} ]},
+        // BABAK 4
+        { id: "Q17", babak: "Babak 4: Keamanan Rumah", text: "Bagaimana posisi hubungan dengan keluarga besar (mertua/ortu) dalam 3 bulan terakhir?", opts: [ {v:"A", t:"Batas privasinya jelas dan disepakati berdua"}, {v:"B", t:"Aku sering terjepit menjaga perasaan dia dan keluarga"}, {v:"C", t:"Intervensi dan campur tangan keluarga terlalu dalam"}, {v:"D", t:"Kami belum pernah duduk membahas batas keterlibatan keluarga"}, {v:"E", t:"Sangat aman, keluarga tidak banyak ikut campur"} ]},
+        { id: "Q18", babak: "Babak 4: Keamanan Rumah", text: "Adakah ruang (rahasia, masa lalu, kecemasan) yang belum pernah dibuka ke dia?", opts: [ {v:"A", t:"Nggak ada, dia tahu semuanya"}, {v:"B", t:"Ada, menunggu momen yang pas"}, {v:"C", t:"Ada, dan sepertinya selamanya kusimpan sendiri"}, {v:"D", t:"Ada, takut cara dia menilaiku berubah kalau tahu"}, {v:"E", t:"Ada, tapi cuma hal kecil yang nggak penting"} ]},
+        { id: "Q19", babak: "Babak 4: Keamanan Rumah", text: "Sejauh mana pasangan tahu \"dapur keuangan pribadimu\"?", opts: [ {v:"A", t:"Tahu persis semuanya (transparan)"}, {v:"B", t:"Tahu garis besarnya saja"}, {v:"C", t:"Tahu sebagian, sisanya wilayah privasiku"}, {v:"D", t:"Hampir tidak tahu sama sekali"}, {v:"E", t:"Justru aku yang tidak tahu sama sekali keuangannya"} ]},
+        { id: "Q20", babak: "Babak 4: Keamanan Rumah", text: "Seberapa sering muncul perasaan \"aku belum jadi pasangan yang cukup baik\"?", opts: [ {v:"A", t:"Hampir nggak pernah"}, {v:"B", t:"Sesekali, wajar lah"}, {v:"C", t:"Cukup sering, apalagi kalau habis bergesekan"}, {v:"D", t:"Sering banget, bikin aku terus memaksakan diri"}, {v:"E", t:"Justru aku merasa akulah yang lebih banyak berkorban"} ]},
+        { id: "Q21", babak: "Babak 4: Keamanan Rumah", text: "Soal arah 1-2 tahun ke depan, posisi kalian saat ini...", opts: [ {v:"A", t:"Punya peta yang sama, tinggal jalan"}, {v:"B", t:"Ada beda pendapat, tapi sudah didudukkan"}, {v:"C", t:"Beda di titik krusial, dan belum ada solusi"}, {v:"D", t:"Aku yang terus mengalah soal masa depan agar tidak ribut"}, {v:"E", t:"Belum dibahas sejauh itu, masih bertahan hari ke hari"} ]},
+        // BABAK 5
+        { id: "Q22", babak: "Babak 5: Harapan", text: "Coba ingat satu momen kalian sukses melewati krisis dengan baik. Apa yang beda?", opts: [ {v:"A", t:"Mengambil jeda sebentar, lalu bahas dengan kepala dingin"}, {v:"B", t:"Salah satu berani menurunkan gengsi merangkul duluan"}, {v:"C", t:"Fokus menyerang \"masalahnya\", bukan saling serang karakter"}, {v:"D", t:"Ada pihak ketiga yang bantu mendinginkan"}, {v:"E", t:"Kesulitan mengingat momen seperti itu saat ini"} ]},
+        { id: "Q23", babak: "Babak 5: Harapan", text: "Seberapa aman rasanya menjadi dirimu yang paling jujur dan apa adanya di dekatnya?", opts: [ {v:"A", t:"Sangat aman, aku nggak perlu menutupi apa pun"}, {v:"B", t:"Cukup aman, sebagian besar hal bisa kubagikan"}, {v:"C", t:"Tergantung topiknya, ada yang kusaring dulu"}, {v:"D", t:"Sering menyaring reaksi dan kata-kataku supaya aman"}, {v:"E", t:"Banyak yang harus kututupi supaya suasana tetap baik"} ]},
+        { id: "Q24", babak: "Babak 5: Harapan", text: "Kalau besok ada satu beban terangkat dengan sendirinya, kamu berharap itu apa?", opts: [ {v:"A", t:"Lebih gampang ngobrol dalam tanpa defensif"}, {v:"B", t:"Beban domestik dan rasa lelah terbagi lebih adil"}, {v:"C", t:"Urusan uang jadi terang dan bisa dibahas satu meja"}, {v:"D", t:"Keluarga besar nggak jadi sumber ketegangan"}, {v:"E", t:"Berhenti merasa cemas/harus membuktikan diri"} ]},
+        // PENUTUP (SEVERITY)
+        { id: "Q25", babak: "Persimpangan", text: "Menimbang hubungan ini secara jujur, suara batin mana yang paling keras terdengar?", opts: [ {v:"A", t:"Sangat layak diperjuangkan, kami hanya butuh cara perbaikan yang tepat"}, {v:"B", t:"Melelahkan, tapi aku masih percaya dia partner yang tepat"}, {v:"C", t:"Aku di persimpangan. Mulai mempertanyakan apakah ini sepadan"}, {v:"D", t:"Sulit menemukan hal positif. Terlalu berat untuk dipaksakan"} ]}
+    ];
+
+    // ==========================================
+    // ENGINE LOGIC PYTHON KE JAVASCRIPT
+    // ==========================================
+    const PATTERNS = {
+        "P01": { nama: "Si Penjaga Damai", conds: [["Q10",["C"]], ["Q12",["D"]], ["Q15",["B"]]] },
+        "P02": { nama: "Si Yang Masih Di Sini", conds: [["Q10",["A","B"]], ["Q14",["A","B"]], ["Q22",["A","B","C"]]] },
+        "P03": { nama: "Si Pejuang Mandiri", conds: [["Q3",["D"]], ["Q15",["A"]], ["Q16",["B"]]] },
+        "P04": { nama: "Si Penjaga Diri", conds: [["Q16",["B","C"]], ["Q23",["D","E"]]] },
+        "P05": { nama: "Si Peredam", conds: [["Q10",["E"]], ["Q14",["D"]], ["Q12",["B"]]] },
+        "P06": { nama: "Si Takut Tidak Cukup", conds: [["Q14",["C"]], ["Q20",["C","D"]], ["Q24",["E"]]] },
+        "P07": { nama: "Si Pengirim Sinyal", conds: [["Q3",["B","E"]], ["Q2",["C"]], ["Q9",["D"]]] },
+        "P08": { nama: "Si Beda Arah", conds: [["Q13",["D"]], ["Q21",["C","E"]], ["Q15",["D"]]] },
+        "P09": { nama: "Si Satu Yang Disimpan", conds: [["Q18",["C","D"]], ["Q23",["D","E"]]] },
+        "P10": { nama: "Si Perfeksionis Senyap", conds: [["Q8",["B","C","D"]], ["Q9",["B"]]] },
+        "P11": { nama: "Si Angka Rapi", conds: [["Q6",["B","C"]], ["Q19",["C","D"]], ["Q13",["B"]]] },
+        "P12": { nama: "Si Dua Rumah", conds: [["Q17",["B","C","D"]], ["Q13",["C"]]] },
+        "P13": { nama: "Si Ritme Belum Selaras", conds: [["Q7",["C"]], ["Q1",["D"]], ["Q4",["B"]]] },
+        "P14": { nama: "Si Pencatat Skor", conds: [["Q20",["E"]], ["Q4",["D"]], ["Q5",["B","C"]]] },
+        "P15": { nama: "Si Buru-buru Selesai", conds: [["Q10",["A","D"]], ["Q14",["C"]], ["Q11",["A","B"]]] }
+    };
+    const PRIORITY = ["P09","P11","P12","P04","P06","P15","P08","P10","P14","P03","P01","P05","P07","P13","P02"];
+    
+    function runEngine(answers) {
+        let scores = {}; let eligible = [];
+        for (let pid of Object.keys(PATTERNS)) {
+            let conds = PATTERNS[pid].conds;
+            let met = 0;
+            for (let i=0; i<conds.length; i++) {
+                if (conds[i][1].includes(answers[conds[i][0]])) met++;
+            }
+            scores[pid] = { met, total: conds.length, ratio: met / conds.length };
+            if (met === conds.length) eligible.push(pid);
+        }
+        
+        let primer = null;
+        if (eligible.length > 0) {
+            eligible.sort((a,b) => PRIORITY.indexOf(a) - PRIORITY.indexOf(b));
+            primer = eligible[0];
+        } else {
+            let ranked = Object.keys(PATTERNS).filter(p => p !== "P15" || answers["Q14"] === "C"); // Guard P15
+            ranked.sort((a,b) => (scores[b].ratio - scores[a].ratio) || (PRIORITY.indexOf(a) - PRIORITY.indexOf(b)));
+            primer = ranked[0];
+        }
+        
+        let sev = ["A","B"].includes(answers["Q25"]) ? "REGULER" : "KRITIS";
+        return { primer: PATTERNS[primer].nama, severity: sev, pid: primer };
+    }
+
+    const DASHBOARD_CONF = {
+        "Kedekatan":    {"Q1": [["A","B","E"], ["C"]], "Q2": [["A","B"], ["E"]], "Q7": [["A","B"], ["D"]]},
+        "Beban Ransel": {"Q4": [["A"], ["B"]], "Q5": [["A"], ["D","E"]], "Q9": [["A","E"], ["D"]]},
+        "Siklus Pulih": {"Q10": [["A","B"], ["E"]], "Q11": [["A","B"], ["D"]], "Q12": [["A","E"], ["B","C"]]},
+        "Pagar Rumah":  {"Q17": [["A","E"], ["D"]], "Q18": [["A","E"], ["B"]], "Q19": [["A","B"], ["C"]], "Q23": [["A","B"], ["C"]]}
+    };
+    function runDashboard(answers) {
+        let out = {};
+        for (let dim in DASHBOARD_CONF) {
+            let pts = 0; let qmap = DASHBOARD_CONF[dim];
+            for (let q in qmap) {
+                if (qmap[q][0].includes(answers[q])) pts += 2;
+                else if (qmap[q][1].includes(answers[q])) pts += 1;
+            }
+            out[dim] = Math.round((pts * 100) / (2 * Object.keys(qmap).length));
+        }
+        return out;
+    }
+
+    // ==========================================
+    // UI & STATE MANAGEMENT
+    // ==========================================
+    let currentIndex = 0;
+    let userAnswers = {};
+
+    function switchScreen(hideId, showId) {
+        const hideEl = document.getElementById(hideId);
+        const showEl = document.getElementById(showId);
+        hideEl.style.opacity = 0;
+        setTimeout(() => {
+            hideEl.classList.remove('active');
+            showEl.classList.add('active');
+            setTimeout(() => { showEl.style.opacity = 1; }, 50);
+        }, 400); // Waktu jeda transisi bernapas
+    }
+
+    function startAssessment() {
+        switchScreen('onboarding-screen', 'question-screen');
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const q = questionsData[currentIndex];
+        document.getElementById('babak-indicator').innerText = q.babak;
+        document.getElementById('question-text').innerText = q.text;
+        
+        const optsContainer = document.getElementById('options-container');
+        optsContainer.innerHTML = '';
+        
+        q.opts.forEach(opt => {
+            let div = document.createElement('div');
+            div.className = 'option-card';
+            div.innerText = opt.t;
+            div.onclick = () => selectOption(opt.v, div);
+            
+            // Re-select if user goes back (not implemented in this simple flow, but good practice)
+            if(userAnswers[q.id] === opt.v) div.classList.add('selected');
+            
+            optsContainer.appendChild(div);
+        });
+
+        document.getElementById('next-btn').disabled = !userAnswers[q.id];
+        
+        // Update Progress Bar
+        const progress = ((currentIndex) / questionsData.length) * 100;
+        document.getElementById('progress-bar').style.width = `${progress}%`;
+    }
+
+    function selectOption(val, element) {
+        const qId = questionsData[currentIndex].id;
+        userAnswers[qId] = val;
+        
+        // UI Update
+        document.querySelectorAll('.option-card').forEach(el => el.classList.remove('selected'));
+        element.classList.add('selected');
+        document.getElementById('next-btn').disabled = false;
+    }
+
+    function nextQuestion() {
+        if (currentIndex < questionsData.length - 1) {
+            // Transisi halus antar pertanyaan
+            const screen = document.getElementById('question-screen');
+            screen.style.opacity = 0;
+            setTimeout(() => {
+                currentIndex++;
+                renderQuestion();
+                screen.style.opacity = 1;
+            }, 300);
+        } else {
+            // Selesai -> Proses Data
+            switchScreen('question-screen', 'processing-screen');
+            
+            setTimeout(() => {
+                generateResult();
+                switchScreen('processing-screen', 'result-screen');
+            }, 2500); // Simulasi waktu loading untuk memberi impresi kalkulasi mendalam
+        }
+    }
+
+    function generateResult() {
+        const result = runEngine(userAnswers);
+        const dash = runDashboard(userAnswers);
+        
+        // Set Pola Primer
+        document.getElementById('res-primer-nama').innerText = result.primer;
+        
+        // Render Dasbor
+        const dashContainer = document.getElementById('dashboard-render');
+        dashContainer.innerHTML = '';
+        for(let dim in dash) {
+            dashContainer.innerHTML += `
+                <div class="dash-item">
+                    <div class="dash-label"><span>${dim}</span> <span>${dash[dim]}%</span></div>
+                    <div class="dash-bar-bg">
+                        <div class="dash-bar-fill" style="width: ${dash[dim]}%;"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Set Severity Flags/Peringatan Kecil sesuai pedoman etika
+        const flagEl = document.getElementById('res-severity-flag');
+        if(result.severity === "KRITIS") {
+            if(result.pid === "P08") {
+                flagEl.innerText = "Memahami bahwa kalian mungkin berlari ke arah yang berbeda adalah langkah pertama.";
+            } else if (result.pid === "P09") {
+                flagEl.innerText = "Menjaga jarak emosional; butuh rasa aman untuk terbuka.";
+            } else {
+                flagEl.innerText = "Sistem saat ini sedang kelelahan ekstrem. Perlu stabilisasi diri.";
+            }
+        }
+    }
+</script>
+</body>
+</html>
