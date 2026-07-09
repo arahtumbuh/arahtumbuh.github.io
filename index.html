@@ -4,24 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arah Tumbuh | Digital Life Companion</title>
-
-    <!-- Meta Pixel Code -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '931354349975620');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=931354349975620&ev=PageView&noscript=1"/></noscript>
-    <!-- End Meta Pixel Code -->
-
     <!-- Tipografi Resmi Arah Tumbuh -->
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -207,6 +189,37 @@
             .btn-sm, .btn-disabled { width: 100%; justify-content: center; }
             .lang-switcher { top: 24px; right: 24px; }
         }
+        /* Styling Floating Button */
+.floating-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.float-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background-color: var(--deep-forest);
+    color: var(--warm-sand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.float-btn:hover {
+    transform: scale(1.1);
+    background-color: var(--terracotta);
+}
     </style>
 </head>
 <body>
@@ -278,13 +291,15 @@
                 </div>
 
                 <!-- Musim 02 -->
-                <div class="phase-card step-2">
+                <div class="phase-card active step-2">
                     <div class="phase-num">02</div>
                     <div class="phase-content">
                         <h3 id="p2-title">Menyatu</h3>
                         <p id="p2-desc">Dua sistem kebiasaan yang dibangun bertahun-tahun belajar berbagi satu atap dan menjadi "kita". Membangun fondasi awal.</p>
                     </div>
-                    <div><button class="btn-disabled" disabled id="p2-btn">Segera Hadir</button></div>
+                    <div>
+                        <a href="menyatu.html" class="btn btn-primary btn-sm" style="color: var(--warm-sand);" id="p2-btn">Mulai Asesmen</a>
+                    </div>
                 </div>
 
                 <!-- Musim 03 -->
@@ -375,7 +390,7 @@
                 
                 "p2Title": "Menyatu",
                 "p2Desc": "Dua sistem kebiasaan yang dibangun bertahun-tahun belajar berbagi satu atap dan menjadi \"kita\". Membangun fondasi awal.",
-                "p2Btn": "Segera Hadir",
+                "p2Btn": "Mulai Asesmen",
                 
                 "p3Title": "Mengakar",
                 "p3Desc": "Membangun struktur hidup bersama: rumah, rutinitas, karier, dan pengasuhan. Menjaga nyala agar tidak menjadi sekadar rekan kerja.",
@@ -421,7 +436,7 @@
                 
                 "p2Title": "Becoming One Roof",
                 "p2Desc": "Two habit systems built over years learning to share one roof and become 'us'. Building the initial foundation.",
-                "p2Btn": "Coming Soon",
+                "p2Btn": "Start Assessment",
                 
                 "p3Title": "Putting Down Roots",
                 "p3Desc": "Building a shared life structure: home, routines, career, and parenting. Keeping the spark alive so you don't just become co-workers.",
@@ -476,6 +491,7 @@
             document.getElementById('p2-title').innerHTML = t.p2Title;
             document.getElementById('p2-desc').innerHTML = t.p2Desc;
             document.getElementById('p2-btn').innerHTML = t.p2Btn;
+            document.getElementById('p2-btn').href = 'menyatu.html';
             
             document.getElementById('p3-title').innerHTML = t.p3Title;
             document.getElementById('p3-desc').innerHTML = t.p3Desc;
@@ -505,5 +521,10 @@
         // Init default language
         setLanguage('id');
     </script>
+<div class="floating-container">
+    <a href="https://wa.me/nomor-wa-anda" class="float-btn" target="_blank">WA</a>
+    <a href="https://instagram.com/arahtumbuh" class="float-btn" target="_blank">IG</a>
+    <a href="https://tiktok.com/@arahtumbuh" class="float-btn" target="_blank">TT</a>
+</div>
 </body>
 </html>
